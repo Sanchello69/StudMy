@@ -3,6 +3,7 @@ package com.example.studmy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap mMap;
 
@@ -37,30 +38,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //загрузка фрагмента по умолчанию
+        loadFragment(new HomeFragment());
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+        //getting bottom navigation view and attaching the listener
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(this);
+
+
+       /* BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.home:
-
+                                selectedFragment = new HomeFragment();
                                 break;
                             case R.id.like:
-
+                                selectedFragment = new LikeFragment();
                                 break;
                             case R.id.settings:
-
+                                selectedFragment = new SettingsFragment();
                                 break;
                         }
-                        return false;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content,selectedFragment).commit();
+                        return true;
                     }
                 });
 
@@ -100,7 +113,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    private void addMarkersToMap(final GoogleMap map){
+    private void addMarkersToMap(final GoogleMap map) {
 
         mChildEventListener = mProfileRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -115,7 +128,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String address = dataString.get("address");
                 String discount = dataString.get("discount");
 
-                LatLng location = new LatLng(latitude,longitude);
+                LatLng location = new LatLng(latitude, longitude);
                 map.addMarker(new MarkerOptions().position(location).title(name));
             }
 
@@ -139,5 +152,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = null;
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                fragment = new HomeFragment();
+                break;
+
+            case R.id.like:
+                fragment = new LikeFragment();
+                break;
+
+            case R.id.settings:
+                fragment = new SettingsFragment();
+                break;
+        }
+
+        return loadFragment(fragment);
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 }
