@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,24 +29,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener {
-
-    private GoogleMap mMap;
-
-    ChildEventListener mChildEventListener;
-    //создаем экземпляр БД и сохраняем ссылку на ветку нашей БД
-    DatabaseReference mProfileRef = FirebaseDatabase.getInstance().getReference("studak/kino");
+public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.content,new HomeFragment());
+        fragmentTransaction.commit();
 
         //загрузка фрагмента по умолчанию
         loadFragment(new HomeFragment());
@@ -51,107 +47,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-
-
-       /* BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment selectedFragment = null;
-                        switch (item.getItemId()) {
-                            case R.id.home:
-                                selectedFragment = new HomeFragment();
-                                break;
-                            case R.id.like:
-                                selectedFragment = new LikeFragment();
-                                break;
-                            case R.id.settings:
-                                selectedFragment = new SettingsFragment();
-                                break;
-                        }
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content,selectedFragment).commit();
-                        return true;
-                    }
-                });
-
-       /* FirebaseDatabase database = FirebaseDatabase.getInstance(); //создание экземпляра БД
-        DatabaseReference reference = database.getReference("kino"); //ссылка на БД
-        reference.addValueEventListener(new ValueEventListener() { //чтение БД
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                kino = dataSnapshot.getValue(Kino.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        }); */
-
-
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds( //положение карты при запуске
-                new LatLngBounds(new LatLng(55.574487, 37.379872), new LatLng(55.901914, 37.818179)),
-                5);
-        mMap.animateCamera(cameraUpdate);
-
-        addMarkersToMap(mMap);
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        googleMap.setMyLocationEnabled(true);
-
-    }
-
-    private void addMarkersToMap(final GoogleMap map) {
-
-        mChildEventListener = mProfileRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                //заносим БД в HashMap и получаем значения
-                HashMap<String, Double> dataDouble = (HashMap<String, Double>) dataSnapshot.getValue();
-                double latitude = dataDouble.get("latitude");
-                double longitude = dataDouble.get("longitude");
-                HashMap<String, String> dataString = (HashMap<String, String>) dataSnapshot.getValue();
-                String name = dataString.get("name");
-                String address = dataString.get("address");
-                String discount = dataString.get("discount");
-
-                LatLng location = new LatLng(latitude, longitude);
-                map.addMarker(new MarkerOptions().position(location).title(name));
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override
