@@ -1,13 +1,11 @@
 package com.example.studmy;
 
-
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,22 +25,32 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.content.ContentValues.TAG;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HomeFragment extends Fragment {
 
     private GoogleMap mMap;
+    private LatLngBounds MOSKAU = new LatLngBounds(new LatLng
+            (55.574487, 37.379872), new LatLng(55.901914, 37.818179)); //границы Москвы
     private SupportMapFragment mapFragment;
+    private Marker marker;
     ChildEventListener mChildEventListener;
+
     //создаем экземпляр БД и сохраняем ссылку на ветку нашей БД
     DatabaseReference mProfileRef = FirebaseDatabase.getInstance().getReference("studak/kino");
 
+    ArrayList<String> name_info = new ArrayList<>(); //список для имен
+    ArrayList<String> address_info = new ArrayList<>(); //список для адресов
+    ArrayList<String> discount_info = new ArrayList<>(); //список для описания скидок
+    ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
+    ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
+    ArrayList<Marker> marker_info = new ArrayList<>(); // список для маркеров s
+
+
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -57,10 +66,9 @@ public class HomeFragment extends Fragment {
                 public void onMapReady(GoogleMap googleMap) {
                     mMap = googleMap;
 
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds( //положение карты при запуске
-                            new LatLngBounds(new LatLng(55.574487, 37.379872), new LatLng(55.901914, 37.818179)),
-                            5);
-                    mMap.animateCamera(cameraUpdate);
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(MOSKAU, 5); //положение карты при запуске
+                    mMap.moveCamera(cameraUpdate); //мгновенное перемещение камеры, без анимации
+                    mMap.setLatLngBoundsForCameraTarget(MOSKAU); //ограничиваем область видимости карты
 
                     addMarkersToMap(mMap);
                 }
@@ -88,8 +96,29 @@ public class HomeFragment extends Fragment {
                 String address = dataString.get("address");
                 String discount = dataString.get("discount");
 
+                name_info.add(name);
+                discount_info.add(discount);
+                address_info.add(address);
+                latitude_info.add(latitude);
+                longitude_info.add(longitude);
+
                 LatLng location = new LatLng(latitude, longitude);
-                map.addMarker(new MarkerOptions().position(location).title(name));
+                marker = map.addMarker(new MarkerOptions().position(location));
+                marker_info.add(marker);
+                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        //getActivity() берет активность, в которой запущен наш фрагмент
+                        Intent intent = new Intent(getActivity(), InfoActivity.class);
+                        //Log.d(TAG, "ddd" + marker_info.indexOf(marker));
+                        intent.putExtra("name", name_info.get(marker_info.indexOf(marker))); // добавляем в интент
+                        intent.putExtra("address", address_info.get(marker_info.indexOf(marker)));
+                        intent.putExtra("discount", discount_info.get(marker_info.indexOf(marker)));
+                        startActivity(intent);
+                        return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
+                        // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
+                    }
+                });
             }
 
             @Override
