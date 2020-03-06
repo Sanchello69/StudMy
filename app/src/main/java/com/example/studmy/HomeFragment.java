@@ -37,6 +37,7 @@ public class HomeFragment extends Fragment {
             (55.574487, 37.379872), new LatLng(55.901914, 37.818179)); //границы Москвы
     private SupportMapFragment mapFragment;
     private Marker marker;
+
     ChildEventListener mChildEventListener;
 
     //создаем экземпляр БД и сохраняем ссылку на ветку нашей БД
@@ -47,7 +48,7 @@ public class HomeFragment extends Fragment {
     ArrayList<String> discount_info = new ArrayList<>(); //список для описания скидок
     ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
     ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
-    ArrayList<Marker> marker_info = new ArrayList<>(); // список для маркеров s
+    ArrayList<Marker> marker_info = new ArrayList<>(); // список для маркеров
 
 
     public HomeFragment() {
