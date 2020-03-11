@@ -1,8 +1,11 @@
 package com.example.studmy;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -102,6 +105,18 @@ public class HomeFragment extends Fragment {
                 address_info.add(address);
                 latitude_info.add(latitude);
                 longitude_info.add(longitude);
+/*
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    mMap.setMyLocationEnabled(true);
+                } else {
+                    // Show rationale and request permission.
+                }*/
+
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) { //если получено разрешение
+                    mMap.setMyLocationEnabled(true); //показать свое местоположение
+                }
 
                 LatLng location = new LatLng(latitude, longitude);
                 marker = map.addMarker(new MarkerOptions().position(location));

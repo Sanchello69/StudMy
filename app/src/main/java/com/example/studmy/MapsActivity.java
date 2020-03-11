@@ -2,32 +2,38 @@ package com.example.studmy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
     // способы входа
-    /*List<AuthUI.IdpConfig> providers = Arrays.asList(
+    List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.EmailBuilder().build(),
             new AuthUI.IdpConfig.PhoneBuilder().build(),
-            new AuthUI.IdpConfig.GoogleBuilder().build());*/
+            new AuthUI.IdpConfig.GoogleBuilder().build());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-/*
+
         if(FirebaseAuth.getInstance().getCurrentUser() == null) {
             // запускаем окно входа/регистрации
             startActivityForResult(
@@ -44,9 +50,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
                             .getDisplayName(),
                     Toast.LENGTH_LONG)
                     .show();
-
-            displayMap();
-        }*/
+        }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -56,6 +60,14 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         //получаем меню и прикрепляем слушателя
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+        //запрос на использование геолокации
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                1
+        );
+
     }
 
     @Override
@@ -91,22 +103,17 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         return false;
     }
 
-   /* private void displayMap() {
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-            //IdpResponse response = IdpResponse.fromResultIntent(data);
+            IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
                 // успешно вошел в систему
-                //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                displayMap();
-                // ...
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -115,6 +122,8 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
             }
         }
     }
+
+
 
 
    /* @Override
