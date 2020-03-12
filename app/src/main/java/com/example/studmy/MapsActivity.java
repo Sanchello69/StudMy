@@ -34,27 +34,29 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             // запускаем окно входа/регистрации
             startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build(),
-                1);
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .build(),
+                    1);
         } else {
             // пользователь уже зашел
             Toast.makeText(this,
-                    "Welcome " + FirebaseAuth.getInstance()
+                    "Привет " + FirebaseAuth.getInstance()
                             .getCurrentUser()
                             .getDisplayName(),
                     Toast.LENGTH_LONG)
                     .show();
+
+            //displayMap();
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.content,new HomeFragment());
+        fragmentTransaction.add(R.id.content, new HomeFragment());
         fragmentTransaction.commit();
 
         //получаем меню и прикрепляем слушателя
@@ -103,7 +105,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         return false;
     }
 
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -121,31 +123,22 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
                 // ...
             }
         }
-    }
+    }*/
 
 
-
-
-   /* @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1) {
-            if(resultCode == RESULT_OK) {
-                Toast.makeText(this,
-                        "Successfully signed in. Welcome!",
-                        Toast.LENGTH_LONG)
-                        .show();
-                displayMap();
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                // успешно вошел в систему
+                //displayMap();
             } else {
-                Toast.makeText(this,
-                        "We couldn't sign you in. Please try again later.",
-                        Toast.LENGTH_LONG)
-                        .show();
-
-                // Close the app
+                // закрываем приложение
                 finish();
             }
-        }*/
+        }
+    }
 }

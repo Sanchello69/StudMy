@@ -105,13 +105,6 @@ public class HomeFragment extends Fragment {
                 address_info.add(address);
                 latitude_info.add(latitude);
                 longitude_info.add(longitude);
-/*
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    mMap.setMyLocationEnabled(true);
-                } else {
-                    // Show rationale and request permission.
-                }*/
 
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) { //если получено разрешение
