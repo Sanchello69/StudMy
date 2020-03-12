@@ -27,7 +27,8 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.EmailBuilder().build(),
             new AuthUI.IdpConfig.PhoneBuilder().build(),
-            new AuthUI.IdpConfig.GoogleBuilder().build());
+            new AuthUI.IdpConfig.GoogleBuilder().build(),
+            new  AuthUI.IdpConfig.AnonymousBuilder().build());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +135,12 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 // успешно вошел в систему
+                Toast.makeText(this,
+                        "Привет " + FirebaseAuth.getInstance()
+                                .getCurrentUser()
+                                .getDisplayName(),
+                        Toast.LENGTH_LONG)
+                        .show();
                 //displayMap();
             } else {
                 // закрываем приложение
