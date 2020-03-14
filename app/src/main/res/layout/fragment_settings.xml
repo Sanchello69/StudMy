@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimaryLight"
             android:text="@string/sign_out"
-        />
+            android:layout_gravity="center"
+            />
 
 
     </LinearLayout>

@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +45,8 @@ public class HomeFragment extends Fragment {
     private SupportMapFragment mapFragment;
     private Marker marker;
 
+    DialogFragment dl_info;
+
     ChildEventListener mChildEventListener;
 
     //создаем экземпляр БД и сохраняем ссылку на ветку нашей БД
@@ -61,6 +67,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        dl_info = new DialogInfo();
 
         // не воссоздаем фрагмент каждый раз, когда убеждаемся, что последнее местоположение/состояние карты сохраняются
         if (mapFragment == null) {
@@ -111,12 +119,15 @@ public class HomeFragment extends Fragment {
                     mMap.setMyLocationEnabled(true); //показать свое местоположение
                 }
 
+
+
                 LatLng location = new LatLng(latitude, longitude);
                 marker = map.addMarker(new MarkerOptions().position(location));
                 marker_info.add(marker);
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
+                        /*
                         //getActivity() берет активность, в которой запущен наш фрагмент
                         Intent intent = new Intent(getActivity(), InfoActivity.class);
                         //Log.d(TAG, "ddd" + marker_info.indexOf(marker));
@@ -124,10 +135,25 @@ public class HomeFragment extends Fragment {
                         intent.putExtra("address", address_info.get(marker_info.indexOf(marker)));
                         intent.putExtra("discount", discount_info.get(marker_info.indexOf(marker)));
                         startActivity(intent);
+                         */
+
+
+                        //dl_info.setArguments(bundle);
+                       // android.app.FragmentManager fragmentManager = getFragmentManager();
+                       // fragmentManager.beginTransaction().replace(R.id.content_frame,  yfc).commit();
+                        //FragmentManager fragmentManager = getFragmentManager();
+                        //fragmentManager.beginTransaction().replace(R.id.,  dl_info).commit();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("address", address_info.get(marker_info.indexOf(marker)));
+                        dl_info.setArguments(bundle);
+
+                        dl_info.show(getFragmentManager(), "dl_info");
                         return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
                     }
                 });
+
             }
 
             @Override

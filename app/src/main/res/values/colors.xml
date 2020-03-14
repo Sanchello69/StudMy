@@ -5,4 +5,5 @@
     <color name="colorPrimaryLight">#C5CAE9</color>
     <color name="colorAccent">#FF5252</color>
     <color name="bottom_navigation">#C0C0C0</color>
+    <color name="fon">#FFFFFF</color>
 </resources>
