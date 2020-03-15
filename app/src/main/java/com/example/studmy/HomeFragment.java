@@ -145,7 +145,9 @@ public class HomeFragment extends Fragment {
                         //fragmentManager.beginTransaction().replace(R.id.,  dl_info).commit();
 
                         Bundle bundle = new Bundle();
+                        bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(marker)));
+                        bundle.putString("discount", discount_info.get(marker_info.indexOf(marker)));
                         dl_info.setArguments(bundle);
 
                         dl_info.show(getFragmentManager(), "dl_info");
