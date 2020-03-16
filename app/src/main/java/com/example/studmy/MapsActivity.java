@@ -33,7 +33,6 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
             new AuthUI.IdpConfig.GoogleBuilder().build(),
             new AuthUI.IdpConfig.AnonymousBuilder().build());
 
-    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

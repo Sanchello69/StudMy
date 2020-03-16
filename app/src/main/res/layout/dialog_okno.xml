@@ -38,7 +38,7 @@
             app:icon="@drawable/ic_route"></Button>
 
         <Button
-            android:id="@+id/icon_share"
+            android:id="@+id/btn_share"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
             android:layout_height="45dp"

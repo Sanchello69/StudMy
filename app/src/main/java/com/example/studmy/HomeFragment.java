@@ -1,16 +1,12 @@
 package com.example.studmy;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -136,13 +132,6 @@ public class HomeFragment extends Fragment {
                         intent.putExtra("discount", discount_info.get(marker_info.indexOf(marker)));
                         startActivity(intent);
                          */
-
-
-                        //dl_info.setArguments(bundle);
-                       // android.app.FragmentManager fragmentManager = getFragmentManager();
-                       // fragmentManager.beginTransaction().replace(R.id.content_frame,  yfc).commit();
-                        //FragmentManager fragmentManager = getFragmentManager();
-                        //fragmentManager.beginTransaction().replace(R.id.,  dl_info).commit();
 
                         Bundle bundle = new Bundle();
                         bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
