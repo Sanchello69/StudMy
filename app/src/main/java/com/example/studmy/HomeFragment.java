@@ -126,17 +126,19 @@ public class HomeFragment extends Fragment {
                         /*
                         //getActivity() берет активность, в которой запущен наш фрагмент
                         Intent intent = new Intent(getActivity(), InfoActivity.class);
-                        //Log.d(TAG, "ddd" + marker_info.indexOf(marker));
+
                         intent.putExtra("name", name_info.get(marker_info.indexOf(marker))); // добавляем в интент
                         intent.putExtra("address", address_info.get(marker_info.indexOf(marker)));
                         intent.putExtra("discount", discount_info.get(marker_info.indexOf(marker)));
                         startActivity(intent);
                          */
+                       // Log.d(TAG, "ddd" + marker_info.indexOf(marker));
 
                         Bundle bundle = new Bundle();
                         bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(marker)));
                         bundle.putString("discount", discount_info.get(marker_info.indexOf(marker)));
+                        bundle.putInt("num", marker_info.indexOf(marker));
                         dl_info.setArguments(bundle);
 
                         dl_info.show(getFragmentManager(), "dl_info");

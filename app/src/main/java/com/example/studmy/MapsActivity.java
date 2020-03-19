@@ -12,6 +12,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -21,9 +22,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
     // способы входа
@@ -33,24 +38,25 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
             new AuthUI.IdpConfig.GoogleBuilder().build(),
             new AuthUI.IdpConfig.AnonymousBuilder().build());
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+        if (getInstance().getCurrentUser() == null) {
             // запускаем окно входа/регистрации
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
+                          //  .setLogo(R.drawable.my_great_logo)      // логотип
+                            .setTheme(R.style.AppTheme)      // наша тема
                             .build(),
                     1);
         } else {
             // пользователь уже зашел
             Toast.makeText(this,
-                    "Привет " + FirebaseAuth.getInstance()
+                    "Привет " + getInstance()
                             .getCurrentUser()
                             .getDisplayName(),
                     Toast.LENGTH_LONG)
@@ -119,7 +125,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
 
             if (resultCode == RESULT_OK) {
                 // успешно вошел в систему
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -128,7 +134,6 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
             }
         }
     }*/
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
@@ -139,12 +144,15 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
             if (resultCode == RESULT_OK) {
                 // успешно вошел в систему
                 Toast.makeText(this,
-                        "Привет " + FirebaseAuth.getInstance()
+                        "Привет " + getInstance()
                                 .getCurrentUser()
                                 .getDisplayName(),
                         Toast.LENGTH_LONG)
                         .show();
-                //displayMap();
+
+
+
+
             } else {
                 // закрываем приложение
                 finish();

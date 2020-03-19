@@ -46,12 +46,14 @@
             android:backgroundTint="@color/colorPrimary"
             android:text="@string/share"
             app:icon="@drawable/ic_share1"></Button>
-        <CheckBox
-            android:id="@+id/icon_like"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <ToggleButton
+            android:id="@+id/button_like"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/toggle_selector"
+            android:textOff=""
+            android:textOn=""
             android:layout_margin="5dp"
-            android:button="@drawable/ic_like1"
             />
     </LinearLayout>
 
