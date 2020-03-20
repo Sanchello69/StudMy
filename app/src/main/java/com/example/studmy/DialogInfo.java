@@ -102,7 +102,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
         String userID = user.getUid();// id пользователя
 
         FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
-        DatabaseReference ref = db.getReference(userID+"/like"+num_like); // ключ
+        DatabaseReference ref = db.getReference("user/"+userID+"/like"+num_like); // ключ
 
         if (isChecked){
             ref.setValue(num_like); // значение

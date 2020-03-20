@@ -3,27 +3,19 @@ package com.example.studmy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +42,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
                           //  .setLogo(R.drawable.my_great_logo)      // логотип
-                            .setTheme(R.style.AppTheme)      // наша тема
+                            .setTheme(R.style.AppTheme) // наша тема
                             .build(),
                     1);
         } else {
@@ -61,8 +53,6 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
                             .getDisplayName(),
                     Toast.LENGTH_LONG)
                     .show();
-
-            //displayMap();
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -149,10 +139,6 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
                                 .getDisplayName(),
                         Toast.LENGTH_LONG)
                         .show();
-
-
-
-
             } else {
                 // закрываем приложение
                 finish();
