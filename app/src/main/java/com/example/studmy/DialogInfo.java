@@ -48,12 +48,27 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
     String userID = user.getUid();// id пользователя
 
     FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
-    DatabaseReference ref = db.getReference("user/"+userID+"/like"+num_like); // ключ
+    DatabaseReference ref; // ключ
 
     public DialogInfo() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        btn_like.setChecked(likeBoolean);
+        super.onStart();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,8 +81,8 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
         discountText = bundle.getString("discount");
         num_like = bundle.getInt("num");
         likeBoolean = bundle.getBoolean("boolean_like");
-       // btn_like.setChecked(likeBoolean);
-        Log.d("ddd", "/"+ likeBoolean + " " + num_like);
+
+        ref = db.getReference("user/"+userID+"/like"+num_like); //ключ
 
         TextView nameView = (TextView)view.findViewById(R.id.info_name);
         nameView.setText(nameText); // Добавляем текст в надпись с идентификатором addressText
@@ -85,7 +100,6 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
 
         btn_like = (ToggleButton) view.findViewById(R.id.button_like);
         btn_like.setOnCheckedChangeListener(this);
-
 
 
         //getDialog().getWindow().setGravity(Gravity.BOTTOM);
@@ -118,11 +132,13 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked){
-            ref.setValue(num_like); // значение
-        }
-        else{
-            ref.removeValue(); //удаляем
+        if (isChecked !=likeBoolean){
+            if (isChecked && likeBoolean==false){
+                ref.setValue(num_like); // значение
+            }
+            else if (likeBoolean==true){
+                ref.removeValue(); //удаляем
+            }
         }
     }
 }

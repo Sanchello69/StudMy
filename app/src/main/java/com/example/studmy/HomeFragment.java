@@ -115,6 +115,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                onChildAdded(dataSnapshot, s);
 
             }
 
@@ -125,7 +126,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                onChildAdded(dataSnapshot, s);
             }
 
             @Override
@@ -183,12 +184,13 @@ public class HomeFragment extends Fragment {
 
                         dl_info.show(getFragmentManager(), "dl_info");
 
-                        Log.d("sss", ""+ like_info);
                        // Log.d("fff",marker_info.indexOf(marker)+" " +  like_info.indexOf(marker_info.indexOf(marker)));
 
                         for (int i=0; i<like_info.size(); i++){
-                            if (marker_info.indexOf(marker)==like_info.indexOf(i)){
+                            Log.d("sss", marker_info.indexOf(marker) + " "+ like_info.get(i));
+                            if (marker_info.indexOf(marker)==like_info.get(i)){
                                 bundle.putBoolean("boolean_like", true);
+                                break;
                             }
                             else{
                                 bundle.putBoolean("boolean_like", false);
