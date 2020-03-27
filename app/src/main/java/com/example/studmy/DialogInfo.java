@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +21,14 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
@@ -32,7 +41,14 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
     private Bundle bundle;
     private String addressText, nameText, discountText;
     private int num_like;
+    private boolean likeBoolean;
     ToggleButton btn_like;
+
+    FirebaseUser user = getInstance().getCurrentUser();
+    String userID = user.getUid();// id пользователя
+
+    FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
+    DatabaseReference ref = db.getReference("user/"+userID+"/like"+num_like); // ключ
 
     public DialogInfo() {
         // Required empty public constructor
@@ -49,6 +65,9 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
         nameText = bundle.getString("name");
         discountText = bundle.getString("discount");
         num_like = bundle.getInt("num");
+        likeBoolean = bundle.getBoolean("boolean_like");
+       // btn_like.setChecked(likeBoolean);
+        Log.d("ddd", "/"+ likeBoolean + " " + num_like);
 
         TextView nameView = (TextView)view.findViewById(R.id.info_name);
         nameView.setText(nameText); // Добавляем текст в надпись с идентификатором addressText
@@ -66,6 +85,8 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
 
         btn_like = (ToggleButton) view.findViewById(R.id.button_like);
         btn_like.setOnCheckedChangeListener(this);
+
+
 
         //getDialog().getWindow().setGravity(Gravity.BOTTOM);
 
@@ -97,13 +118,6 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-        FirebaseUser user = getInstance().getCurrentUser();
-        String userID = user.getUid();// id пользователя
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
-        DatabaseReference ref = db.getReference("user/"+userID+"/like"+num_like); // ключ
-
         if (isChecked){
             ref.setValue(num_like); // значение
         }

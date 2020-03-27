@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -22,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class HomeFragment extends Fragment {
 
@@ -45,6 +49,8 @@ public class HomeFragment extends Fragment {
 
     ChildEventListener mChildEventListener;
 
+    Bundle bundle = new Bundle();
+
     //создаем экземпляр БД и сохраняем ссылку на ветку нашей БД
     DatabaseReference mProfileRef = FirebaseDatabase.getInstance().getReference("studak/kino");
 
@@ -54,6 +60,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
     ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
     ArrayList<Marker> marker_info = new ArrayList<>(); // список для маркеров
+    ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
 
 
     public HomeFragment() {
@@ -91,6 +98,42 @@ public class HomeFragment extends Fragment {
 
     private void addMarkersToMap(final GoogleMap map) {
 
+        FirebaseUser user = getInstance().getCurrentUser();
+        String userID = user.getUid();// id пользователя
+
+        FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
+        DatabaseReference ref = db.getReference("user/" + userID); // ключ
+
+        mChildEventListener = ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                // HashMap<String, Integer> dataInt = (HashMap<String, Integer>) dataSnapshot.getValue();
+                // Integer like = dataInt.get("like");
+                like_info.add(dataSnapshot.getValue().hashCode());
+                //Log.d("fff",like_info+"" );
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         mChildEventListener = mProfileRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -115,8 +158,6 @@ public class HomeFragment extends Fragment {
                     mMap.setMyLocationEnabled(true); //показать свое местоположение
                 }
 
-
-
                 LatLng location = new LatLng(latitude, longitude);
                 marker = map.addMarker(new MarkerOptions().position(location));
                 marker_info.add(marker);
@@ -134,7 +175,6 @@ public class HomeFragment extends Fragment {
                          */
                        // Log.d(TAG, "ddd" + marker_info.indexOf(marker));
 
-                        Bundle bundle = new Bundle();
                         bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(marker)));
                         bundle.putString("discount", discount_info.get(marker_info.indexOf(marker)));
@@ -142,6 +182,20 @@ public class HomeFragment extends Fragment {
                         dl_info.setArguments(bundle);
 
                         dl_info.show(getFragmentManager(), "dl_info");
+
+                        Log.d("sss", ""+ like_info);
+                       // Log.d("fff",marker_info.indexOf(marker)+" " +  like_info.indexOf(marker_info.indexOf(marker)));
+
+                        for (int i=0; i<like_info.size(); i++){
+                            if (marker_info.indexOf(marker)==like_info.indexOf(i)){
+                                bundle.putBoolean("boolean_like", true);
+                            }
+                            else{
+                                bundle.putBoolean("boolean_like", false);
+
+                            }
+                        }
+
                         return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
                     }
