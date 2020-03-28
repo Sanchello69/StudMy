@@ -46,15 +46,24 @@
             android:backgroundTint="@color/colorPrimary"
             android:text="@string/share"
             app:icon="@drawable/ic_share1"></Button>
+
+        <ImageButton
+            android:id="@+id/imageButtonLike"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:background="@color/fon"
+            android:src="@drawable/ic_like1_off" />
+
         <ToggleButton
             android:id="@+id/button_like"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_margin="5dp"
             android:background="@drawable/toggle_selector"
             android:textOff=""
-            android:textOn=""
-            android:layout_margin="5dp"
-            />
+            android:textOn="" />
+
     </LinearLayout>
 
 </LinearLayout>

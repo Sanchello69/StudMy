@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -43,6 +44,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
     private int num_like;
     private boolean likeBoolean;
     ToggleButton btn_like;
+    ImageButton imageButton;
 
     FirebaseUser user = getInstance().getCurrentUser();
     String userID = user.getUid();// id пользователя
@@ -100,6 +102,29 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
 
         btn_like = (ToggleButton) view.findViewById(R.id.button_like);
         btn_like.setOnCheckedChangeListener(this);
+
+        imageButton = view.findViewById(R.id.imageButtonLike);
+
+        if (likeBoolean)
+            imageButton.setImageResource(R.drawable.ic_like1_on);
+        else
+            imageButton.setImageResource(R.drawable.ic_like1_off);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likeBoolean = !likeBoolean;
+                // меняем изображение на кнопке и заносим в БД
+                if (likeBoolean){
+                    ref.setValue(num_like); // заносим значение
+                    imageButton.setImageResource(R.drawable.ic_like1_on);
+                }
+                else{
+                    ref.removeValue(); //удаляем
+                    imageButton.setImageResource(R.drawable.ic_like1_off);
+                }
+            }
+        });
 
 
         //getDialog().getWindow().setGravity(Gravity.BOTTOM);
