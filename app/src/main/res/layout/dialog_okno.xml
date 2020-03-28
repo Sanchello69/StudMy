@@ -55,15 +55,6 @@
             android:background="@color/fon"
             android:src="@drawable/ic_like1_off" />
 
-        <ToggleButton
-            android:id="@+id/button_like"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/toggle_selector"
-            android:textOff=""
-            android:textOn="" />
-
     </LinearLayout>
 
 </LinearLayout>

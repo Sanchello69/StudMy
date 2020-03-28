@@ -36,14 +36,13 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DialogInfo extends DialogFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class DialogInfo extends DialogFragment implements View.OnClickListener {
 
     private Button btn_route, btn_share;
     private Bundle bundle;
     private String addressText, nameText, discountText;
     private int num_like;
     private boolean likeBoolean;
-    ToggleButton btn_like;
     ImageButton imageButton;
 
     FirebaseUser user = getInstance().getCurrentUser();
@@ -69,7 +68,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
         likeBoolean = bundle.getBoolean("boolean_like");
 
 
-        ref = db.getReference("user/"+userID+"/like"+num_like); //ключ
+        ref = db.getReference("user/"+userID+"/like"+"/like"+num_like); //ключ
 
         TextView nameView = (TextView)view.findViewById(R.id.info_name);
         nameView.setText(nameText); // Добавляем текст в надпись с идентификатором addressText
@@ -85,10 +84,9 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
         btn_route.setOnClickListener(this);
         btn_share.setOnClickListener(this);
 
-        btn_like = (ToggleButton) view.findViewById(R.id.button_like);
-        btn_like.setOnCheckedChangeListener(this);
-
         imageButton = view.findViewById(R.id.imageButtonLike);
+
+        Log.d("huh", ""+ likeBoolean);
 
         if (likeBoolean)
             imageButton.setImageResource(R.drawable.ic_like1_on);
@@ -98,7 +96,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                likeBoolean = !likeBoolean;
                 // меняем изображение на кнопке и заносим в БД
                 if (likeBoolean){
                     ref.setValue(num_like); // заносим значение
@@ -108,7 +106,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
                     ref.removeValue(); //удаляем
                     imageButton.setImageResource(R.drawable.ic_like1_off);
                 }
-                likeBoolean = !likeBoolean;
+
             }
         });
 
@@ -137,18 +135,6 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
                 intent.putExtra(Intent.EXTRA_TEXT, textToSend);
                 startActivity(Intent.createChooser(intent, "Поделиться"));
                 break;
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked !=likeBoolean){
-            if (isChecked && likeBoolean==false){
-                ref.setValue(num_like); // значение
-            }
-            else if (likeBoolean==true){
-                ref.removeValue(); //удаляем
-            }
         }
     }
 }
