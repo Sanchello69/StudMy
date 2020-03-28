@@ -57,22 +57,6 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onStart() {
-        btn_like.setChecked(likeBoolean);
-        super.onStart();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_okno, null);
@@ -83,6 +67,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
         discountText = bundle.getString("discount");
         num_like = bundle.getInt("num");
         likeBoolean = bundle.getBoolean("boolean_like");
+
 
         ref = db.getReference("user/"+userID+"/like"+num_like); //ключ
 
@@ -113,7 +98,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeBoolean = !likeBoolean;
+
                 // меняем изображение на кнопке и заносим в БД
                 if (likeBoolean){
                     ref.setValue(num_like); // заносим значение
@@ -123,9 +108,9 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener, 
                     ref.removeValue(); //удаляем
                     imageButton.setImageResource(R.drawable.ic_like1_off);
                 }
+                likeBoolean = !likeBoolean;
             }
         });
-
 
         //getDialog().getWindow().setGravity(Gravity.BOTTOM);
 
