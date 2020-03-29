@@ -44,17 +44,23 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
 
     ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
 
-    FirebaseUser user = getInstance().getCurrentUser();
-    String userID = user.getUid();// id пользователя
+    FirebaseUser user;
+    String userID;// id пользователя
 
     FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
     DatabaseReference ref; // ключ
-    DatabaseReference ref1 = db.getReference("user/" + userID + "/like"); // ключ
+    DatabaseReference ref1; // ключ
 
     ChildEventListener mChildEventListener;
 
     public DialogInfo() {
         // Required empty public constructor
+
+        user = getInstance().getCurrentUser();
+        userID = user.getUid();// id пользователя
+
+        ref1 = db.getReference("user/" + userID + "/like");
+
         mChildEventListener = ref1.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

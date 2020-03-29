@@ -1,6 +1,7 @@
 package com.example.studmy;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -49,8 +50,10 @@ public class SettingsFragment extends Fragment {
                                         Toast.LENGTH_LONG)
                                         .show();
 
-                                // закрываем приложение
-                                getActivity().finish();
+                                // закрываем окно и заново открываем окно входа/регистрации
+                                //getActivity().finish();
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
                             }
                         });
             }

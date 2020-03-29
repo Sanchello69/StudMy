@@ -24,18 +24,18 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
     // способы входа
-    List<AuthUI.IdpConfig> providers = Arrays.asList(
+   /* List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.EmailBuilder().build(),
             new AuthUI.IdpConfig.PhoneBuilder().build(),
             new AuthUI.IdpConfig.GoogleBuilder().build(),
-            new AuthUI.IdpConfig.AnonymousBuilder().build());
+            new AuthUI.IdpConfig.AnonymousBuilder().build());*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        if (getInstance().getCurrentUser() == null) {
+       /* if (getInstance().getCurrentUser() == null) {
             // запускаем окно входа/регистрации
             startActivityForResult(
                     AuthUI.getInstance()
@@ -53,7 +53,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
                             .getDisplayName(),
                     Toast.LENGTH_LONG)
                     .show();
-        }
+        }*/
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -64,12 +64,12 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        //запрос на использование геолокации
+       /* //запрос на использование геолокации
         ActivityCompat.requestPermissions(
                 this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 1
-        );
+        );*/
     }
 
     @Override
@@ -125,7 +125,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         }
     }*/
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -144,5 +144,5 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
                 finish();
             }
         }
-    }
+    }*/
 }
