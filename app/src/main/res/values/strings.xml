@@ -4,6 +4,7 @@
     <string name="sign_out">Выход</string>
     <string name="route">На карте</string>
     <string name="share">Поделиться</string>
+    <string name="like">Понравившиеся места</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
