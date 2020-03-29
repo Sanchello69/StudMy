@@ -114,12 +114,12 @@ public class HomeFragment extends Fragment {
                 }
 
                 LatLng location = new LatLng(latitude, longitude);
-                marker = map.addMarker(new MarkerOptions().position(location));
+                marker = map.addMarker(new MarkerOptions().position(location)); // ставим маркеры
                 marker_info.add(marker);
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-
+                        //передаем информацию в диалоговое окно
                         bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(marker)));
                         bundle.putString("discount", discount_info.get(marker_info.indexOf(marker)));

@@ -123,7 +123,6 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
             else{
                 likeBoolean=false;
             }
-            //like_info.remove(i);
         }
 
         if (likeBoolean)
