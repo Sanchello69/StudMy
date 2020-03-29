@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -24,19 +22,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static android.content.ContentValues.TAG;
-import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class HomeFragment extends Fragment {
 
@@ -61,8 +54,6 @@ public class HomeFragment extends Fragment {
     ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
     ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
     ArrayList<Marker> marker_info = new ArrayList<>(); // список для маркеров
-   // ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
-
 
     public HomeFragment() {
     }
@@ -98,9 +89,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void addMarkersToMap(final GoogleMap map) {
-
-
-
         mChildEventListener = mProfileRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -140,7 +128,6 @@ public class HomeFragment extends Fragment {
                         intent.putExtra("discount", discount_info.get(marker_info.indexOf(marker)));
                         startActivity(intent);
                          */
-                       // Log.d(TAG, "ddd" + like_info);
 
                         bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(marker)));

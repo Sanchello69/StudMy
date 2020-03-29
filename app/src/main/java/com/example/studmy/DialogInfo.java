@@ -16,10 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -29,7 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
@@ -61,27 +58,19 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
         mChildEventListener = ref1.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                // HashMap<String, Integer> dataInt = (HashMap<String, Integer>) dataSnapshot.getValue();
-                // Integer like = dataInt.get("like");
                 like_info.add(dataSnapshot.getValue().hashCode());
-                //Log.d("fff",like_info+"" );
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //  like_info.clear();
-                // like_info.add(dataSnapshot.getValue().hashCode());
-
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                //like_info.add(dataSnapshot.getValue().hashCode());
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                // like_info.add(dataSnapshot.getValue().hashCode());
             }
 
             @Override
@@ -89,22 +78,12 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
 
             }
         });
-
-
-    }
-
-    @Override
-    public void onStart() {
-
-
-        super.onStart();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_okno, null);
-
 
         bundle = getArguments();
         addressText = bundle.getString("address");
@@ -166,7 +145,6 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
                         }
                     }
                 }
-
             }
         });
 
