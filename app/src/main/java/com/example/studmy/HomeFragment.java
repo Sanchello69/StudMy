@@ -119,15 +119,6 @@ public class HomeFragment extends Fragment {
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-                        /*
-                        //getActivity() берет активность, в которой запущен наш фрагмент
-                        Intent intent = new Intent(getActivity(), InfoActivity.class);
-
-                        intent.putExtra("name", name_info.get(marker_info.indexOf(marker))); // добавляем в интент
-                        intent.putExtra("address", address_info.get(marker_info.indexOf(marker)));
-                        intent.putExtra("discount", discount_info.get(marker_info.indexOf(marker)));
-                        startActivity(intent);
-                         */
 
                         bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(marker)));

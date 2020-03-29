@@ -30,7 +30,6 @@ public class SettingsFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,7 +50,6 @@ public class SettingsFragment extends Fragment {
                                         .show();
 
                                 // закрываем окно и заново открываем окно входа/регистрации
-                                //getActivity().finish();
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
                             }
