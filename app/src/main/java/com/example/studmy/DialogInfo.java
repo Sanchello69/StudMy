@@ -45,14 +45,59 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
     private boolean likeBoolean;
     ImageButton imageButton;
 
+    ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
+
     FirebaseUser user = getInstance().getCurrentUser();
     String userID = user.getUid();// id пользователя
 
     FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
     DatabaseReference ref; // ключ
+    DatabaseReference ref1 = db.getReference("user/" + userID + "/like"); // ключ
+
+    ChildEventListener mChildEventListener;
 
     public DialogInfo() {
         // Required empty public constructor
+        mChildEventListener = ref1.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                // HashMap<String, Integer> dataInt = (HashMap<String, Integer>) dataSnapshot.getValue();
+                // Integer like = dataInt.get("like");
+                like_info.add(dataSnapshot.getValue().hashCode());
+                //Log.d("fff",like_info+"" );
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                //  like_info.clear();
+                // like_info.add(dataSnapshot.getValue().hashCode());
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                //like_info.add(dataSnapshot.getValue().hashCode());
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                // like_info.add(dataSnapshot.getValue().hashCode());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onStart() {
+
+
+        super.onStart();
     }
 
     @Override
@@ -60,13 +105,12 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_okno, null);
 
+
         bundle = getArguments();
         addressText = bundle.getString("address");
         nameText = bundle.getString("name");
         discountText = bundle.getString("discount");
         num_like = bundle.getInt("num");
-        likeBoolean = bundle.getBoolean("boolean_like");
-
 
         ref = db.getReference("user/"+userID+"/like"+"/like"+num_like); //ключ
 
@@ -86,7 +130,16 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
 
         imageButton = view.findViewById(R.id.imageButtonLike);
 
-        Log.d("huh", ""+ likeBoolean);
+        for (int i=0; i<like_info.size(); i++){
+            if (num_like==like_info.get(i)){
+                likeBoolean=true;
+                break;
+            }
+            else{
+                likeBoolean=false;
+            }
+            //like_info.remove(i);
+        }
 
         if (likeBoolean)
             imageButton.setImageResource(R.drawable.ic_like1_on);
@@ -101,10 +154,17 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
                 if (likeBoolean){
                     ref.setValue(num_like); // заносим значение
                     imageButton.setImageResource(R.drawable.ic_like1_on);
+
                 }
                 else{
                     ref.removeValue(); //удаляем
                     imageButton.setImageResource(R.drawable.ic_like1_off);
+
+                    for (int i=0; i<like_info.size(); i++){
+                        if (num_like==like_info.get(i)){
+                            like_info.remove(i);
+                        }
+                    }
                 }
 
             }

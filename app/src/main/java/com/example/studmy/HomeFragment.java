@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
     ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
     ArrayList<Marker> marker_info = new ArrayList<>(); // список для маркеров
-    ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
+   // ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
 
 
     public HomeFragment() {
@@ -99,42 +99,7 @@ public class HomeFragment extends Fragment {
 
     private void addMarkersToMap(final GoogleMap map) {
 
-        FirebaseUser user = getInstance().getCurrentUser();
-        String userID = user.getUid();// id пользователя
 
-        FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
-        DatabaseReference ref = db.getReference("user/" + userID); // ключ
-
-        mChildEventListener = ref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                // HashMap<String, Integer> dataInt = (HashMap<String, Integer>) dataSnapshot.getValue();
-                // Integer like = dataInt.get("like");
-                like_info.add(dataSnapshot.getValue().hashCode());
-                //Log.d("fff",like_info+"" );
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                onChildAdded(dataSnapshot, s);
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                onChildAdded(dataSnapshot, s);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         mChildEventListener = mProfileRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -175,28 +140,15 @@ public class HomeFragment extends Fragment {
                         intent.putExtra("discount", discount_info.get(marker_info.indexOf(marker)));
                         startActivity(intent);
                          */
-                       // Log.d(TAG, "ddd" + marker_info.indexOf(marker));
+                       // Log.d(TAG, "ddd" + like_info);
 
                         bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(marker)));
                         bundle.putString("discount", discount_info.get(marker_info.indexOf(marker)));
                         bundle.putInt("num", marker_info.indexOf(marker));
+
                         dl_info.setArguments(bundle);
-
                         dl_info.show(getFragmentManager(), "dl_info");
-
-                       // Log.d("fff",marker_info.indexOf(marker)+" " +  like_info.indexOf(marker_info.indexOf(marker)));
-
-                        for (int i=0; i<like_info.size(); i++){
-                            Log.d("sss", marker_info.indexOf(marker) + " "+ like_info.get(i));
-                            if (marker_info.indexOf(marker)==like_info.get(i)){
-                                bundle.putBoolean("boolean_like", true);
-                                break;
-                            }
-                            else{
-                                bundle.putBoolean("boolean_like", false);
-                            }
-                        }
 
                         return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
