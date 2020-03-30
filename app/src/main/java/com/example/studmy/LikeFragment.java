@@ -82,20 +82,6 @@ public class LikeFragment extends Fragment {
 
             }
         });
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_like, container, false);
-
-        //присваиваем переменной наш RecyclerView
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewLike);
-        //LayoutManager отвечает за позиционирование view-компонентов в RecyclerView,
-        // а также за определение того, когда следует переиспользовать view-компоненты,
-        // которые больше не видны пользователю.
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ref1 = db.getReference("studak/kino");
         mChildEventListener = ref1.addChildEventListener(new ChildEventListener() {
@@ -121,9 +107,6 @@ public class LikeFragment extends Fragment {
 
                 //передаем в recyclerView наш объект адаптера с данными
                 recyclerView.setAdapter(likeAdapter);
-
-
-
             }
 
             @Override
@@ -146,6 +129,36 @@ public class LikeFragment extends Fragment {
 
             }
         });
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_like, container, false);
+
+        //присваиваем переменной наш RecyclerView
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewLike);
+        //LayoutManager отвечает за позиционирование view-компонентов в RecyclerView,
+        // а также за определение того, когда следует переиспользовать view-компоненты,
+        // которые больше не видны пользователю.
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        for (int i=0; i<name_like.size(); i++){
+            for (int j=0; j<like_num.size(); j++){
+                if (i==like_num.get(j)){
+                    like_class.add(new Like(name_like.get(i), address_like.get(i)));
+                }
+            }
+        }
+
+
+        //создаем объект адаптера и передаем ему список данных
+        LikeAdapter likeAdapter = new LikeAdapter(like_class);
+
+        //передаем в recyclerView наш объект адаптера с данными
+        recyclerView.setAdapter(likeAdapter);
+
         return view ;
     }
 
