@@ -18,6 +18,7 @@
             android:text="@string/like" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewLike"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
