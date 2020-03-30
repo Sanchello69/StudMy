@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
@@ -37,10 +39,14 @@ public class LikeFragment extends Fragment {
 
     FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
     DatabaseReference ref; // ключ
+    DatabaseReference ref1; // ключ
 
     ChildEventListener mChildEventListener;
 
-    ArrayList<Integer> like_num = new ArrayList<>();
+    ArrayList<Integer> like_num = new ArrayList<>(); //список для номеров избранных
+    ArrayList<String> name_like = new ArrayList<>(); //список для имен
+    ArrayList<String> address_like = new ArrayList<>(); //список для адресов
+    ArrayList<Like> like_class = new ArrayList<>(); //список для инфы о понравивщихся местах
 
     public LikeFragment() {
         // Required empty public constructor
@@ -91,8 +97,55 @@ public class LikeFragment extends Fragment {
         // которые больше не видны пользователю.
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        ref1 = db.getReference("studak/kino");
+        mChildEventListener = ref1.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                //заносим БД в HashMap и получаем значения
+                HashMap<String, String> dataString = (HashMap<String, String>) dataSnapshot.getValue();
+                String name = dataString.get("name");
+                String address = dataString.get("address");
+
+                name_like.add(name);
+                address_like.add(address);
+                for (int i=0; i<name_like.size(); i++){
+                    for (int j=0; j<like_num.size(); j++){
+                        if (i==like_num.get(j)){
+                            like_class.add(new Like(name_like.get(i), address_like.get(i)));
+                        }
+                    }
+                }
+
+                //создаем объект адаптера и передаем ему список данных
+                LikeAdapter likeAdapter = new LikeAdapter(like_class);
+
+                //передаем в recyclerView наш объект адаптера с данными
+                recyclerView.setAdapter(likeAdapter);
 
 
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         return view ;
     }
 
