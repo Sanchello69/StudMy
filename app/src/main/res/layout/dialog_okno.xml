@@ -31,7 +31,7 @@
         android:textSize="15sp"
         android:layout_margin="5dp"
         android:drawableLeft="@drawable/ic_address"
-        android:drawablePadding="4dp"
+        android:drawablePadding="8dp"
         />
 
     <TextView
@@ -44,7 +44,7 @@
         android:textSize="15sp"
         android:layout_margin="5dp"
         android:drawableLeft="@drawable/ic_tel"
-        android:drawablePadding="4dp"
+        android:drawablePadding="8dp"
         />
 
     <LinearLayout

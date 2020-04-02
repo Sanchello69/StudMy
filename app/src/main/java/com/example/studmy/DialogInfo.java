@@ -98,6 +98,8 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
         phoneText = bundle.getString("phone");
         num_like = bundle.getInt("num");
 
+        Log.d("ddd", ""+phoneText);
+
         ref = db.getReference("user/"+userID+"/like"+"/like"+num_like); //ключ
 
         TextView nameView = (TextView)view.findViewById(R.id.info_name);
@@ -109,8 +111,16 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
         TextView addressView = (TextView)view.findViewById(R.id.info_address);
         addressView.setText(addressText);
 
-        TextView phoneView = (TextView)view.findViewById(R.id.info_phone);
-        phoneView.setText(phoneText);
+        if (phoneText!=null){
+            TextView phoneView = (TextView)view.findViewById(R.id.info_phone);
+            phoneView.setText(phoneText);
+        }
+        else{
+            TextView phoneView = (TextView)view.findViewById(R.id.info_phone);
+            phoneView.setText("Нет данных");
+        }
+
+
 
         btn_route=view.findViewById(R.id.btn_route);
         btn_share=view.findViewById(R.id.btn_share);
