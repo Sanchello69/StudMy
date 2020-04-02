@@ -37,7 +37,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
 
     private Button btn_route, btn_share;
     private Bundle bundle;
-    private String addressText, nameText, discountText;
+    private String addressText, nameText, discountText, phoneText;
     private int num_like;
     private boolean likeBoolean;
     ImageButton imageButton;
@@ -95,6 +95,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
         addressText = bundle.getString("address");
         nameText = bundle.getString("name");
         discountText = bundle.getString("discount");
+        phoneText = bundle.getString("phone");
         num_like = bundle.getInt("num");
 
         ref = db.getReference("user/"+userID+"/like"+"/like"+num_like); //ключ
@@ -107,6 +108,9 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
 
         TextView addressView = (TextView)view.findViewById(R.id.info_address);
         addressView.setText(addressText);
+
+        TextView phoneView = (TextView)view.findViewById(R.id.info_phone);
+        phoneView.setText(phoneText);
 
         btn_route=view.findViewById(R.id.btn_route);
         btn_share=view.findViewById(R.id.btn_share);

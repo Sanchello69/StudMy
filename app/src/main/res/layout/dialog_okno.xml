@@ -30,6 +30,21 @@
         android:textIsSelectable="true"
         android:textSize="15sp"
         android:layout_margin="5dp"
+        android:drawableLeft="@drawable/ic_address"
+        android:drawablePadding="4dp"
+        />
+
+    <TextView
+        android:id="@+id/info_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text1"
+        android:autoLink="phone"
+        android:textColorLink="@color/colorPrimary"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
+        android:drawableLeft="@drawable/ic_tel"
+        android:drawablePadding="4dp"
         />
 
     <LinearLayout

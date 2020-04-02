@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment {
     ArrayList<String> name_info = new ArrayList<>(); //список для имен
     ArrayList<String> address_info = new ArrayList<>(); //список для адресов
     ArrayList<String> discount_info = new ArrayList<>(); //список для описания скидок
+    ArrayList<String> phone_info = new ArrayList<>(); //список для телефона
     ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
     ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
     ArrayList<Marker> marker_info = new ArrayList<>(); // список для маркеров
@@ -101,10 +102,12 @@ public class HomeFragment extends Fragment {
                 String name = dataString.get("name");
                 String address = dataString.get("address");
                 String discount = dataString.get("discount");
+                String phone = dataString.get("phone");
 
                 name_info.add(name);
                 discount_info.add(discount);
                 address_info.add(address);
+                phone_info.add(phone);
                 latitude_info.add(latitude);
                 longitude_info.add(longitude);
 
@@ -123,6 +126,7 @@ public class HomeFragment extends Fragment {
                         bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(marker)));
                         bundle.putString("discount", discount_info.get(marker_info.indexOf(marker)));
+                        bundle.putString("phone", phone_info.get(marker_info.indexOf(marker)));
                         bundle.putInt("num", marker_info.indexOf(marker));
 
                         dl_info.setArguments(bundle);
