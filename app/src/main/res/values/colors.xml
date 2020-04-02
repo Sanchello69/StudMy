@@ -6,4 +6,7 @@
     <color name="colorAccent">#FF5252</color>
     <color name="bottom_navigation">#C0C0C0</color>
     <color name="fon">#FFFFFF</color>
+    <color name="text1">#87000000</color>
+    <color name="text2">#54000000</color>
+    <color name="text3">#26000000</color>
 </resources>

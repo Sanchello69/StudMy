@@ -25,13 +25,19 @@
                 android:id="@+id/name_like"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+                android:textIsSelectable="true"
+                android:textColor="@color/text1"
+                android:textSize="20sp"
+                android:layout_margin="2dp" />
 
             <TextView
                 android:id="@+id/address_like"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+                android:textIsSelectable="true"
+                android:textColor="@color/text2"
+                android:textSize="15sp"
+                android:layout_margin="2dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
