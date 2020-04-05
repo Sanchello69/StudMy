@@ -120,7 +120,7 @@ public class LikeFragment extends Fragment {
                 }
 
                 //создаем объект адаптера и передаем ему список данных
-                LikeAdapter likeAdapter = new LikeAdapter(like_class);
+                LikeAdapter likeAdapter = new LikeAdapter(like_class, getActivity());
 
                 //передаем в recyclerView наш объект адаптера с данными
                 recyclerView.setAdapter(likeAdapter);

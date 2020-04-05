@@ -1,5 +1,8 @@
 package com.example.studmy;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,13 @@ import java.util.ArrayList;
 
 public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder> {
 
+    private Context context;
+
     ArrayList<Like> like = new ArrayList<>();
 
-    public LikeAdapter(ArrayList<Like> like) {
+    public LikeAdapter(ArrayList<Like> like, Context context) {
         this.like = like;
+        this.context = context;
     }
 
     @NonNull
@@ -47,6 +53,16 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
             super(view);
             name_text = view.findViewById(R.id.name_like);
             address_text = view.findViewById(R.id.address_like);
+            //вешаем слушателя, обрабатываем клик и предлагаем открыть это место на карте
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    String uri = "geo:0,0?q=" + like.get(position).getName_like() + ' ' + like.get(position).getAddress_like();
+                    Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
+                    context.startActivity(mapIntent);
+                }
+            });
         }
     }
 }
