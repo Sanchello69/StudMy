@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
-                            //  .setLogo(R.drawable.my_great_logo)      // логотип
+                            .setLogo(R.drawable.ic_logomain) // логотип
                             .setTheme(R.style.AppTheme) // наша тема
                             .build(),
                     1);
