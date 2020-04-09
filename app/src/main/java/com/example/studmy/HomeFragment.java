@@ -27,6 +27,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.maps.android.clustering.Cluster;
+import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +39,8 @@ public class HomeFragment extends Fragment {
     private LatLngBounds MOSKAU = new LatLngBounds(new LatLng
             (55.574487, 37.379872), new LatLng(55.901914, 37.818179)); //границы Москвы
     private SupportMapFragment mapFragment;
-    private Marker marker;
+    //private Marker marker;
+    private ClusterManager<MyItem> mClusterManager;
 
     DialogFragment dl_info;
 
@@ -54,7 +57,7 @@ public class HomeFragment extends Fragment {
     ArrayList<String> phone_info = new ArrayList<>(); //список для телефона
     ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
     ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
-    ArrayList<Marker> marker_info = new ArrayList<>(); // список для маркеров
+    ArrayList<MyItem> marker_info = new ArrayList<>(); // список для маркеров
 
     public HomeFragment() {
     }
@@ -77,6 +80,11 @@ public class HomeFragment extends Fragment {
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(MOSKAU, 5); //положение карты при запуске
                     mMap.moveCamera(cameraUpdate); //мгновенное перемещение камеры, без анимации
                     mMap.setLatLngBoundsForCameraTarget(MOSKAU); //ограничиваем область видимости карты
+
+                    mClusterManager = new ClusterManager<MyItem>(getActivity(), mMap);
+                    mClusterManager.setRenderer(new CustomRenderer<MyItem>(getActivity(), mMap, mClusterManager));
+                    mMap.setOnCameraIdleListener(mClusterManager);
+                    mMap.setOnMarkerClickListener(mClusterManager);
 
                     addMarkersToMap(mMap);
                 }
@@ -116,10 +124,48 @@ public class HomeFragment extends Fragment {
                     mMap.setMyLocationEnabled(true); //показать свое местоположение
                 }
 
-                LatLng location = new LatLng(latitude, longitude);
-                marker = map.addMarker(new MarkerOptions().position(location)); // ставим маркеры
-                marker_info.add(marker);
-                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+               // LatLng location = new LatLng(latitude, longitude);
+               // marker = map.addMarker(new MarkerOptions().position(location)); // ставим маркеры
+                //marker_info.add(marker);
+
+                MyItem offsetItem = new MyItem(latitude, longitude);
+                marker_info.add(offsetItem);
+                mClusterManager.addItem(offsetItem);
+                mClusterManager.setAnimation(false);
+                mClusterManager.cluster ();
+                map.setOnMarkerClickListener(mClusterManager);
+
+
+                mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
+                    @Override
+                    public boolean onClusterClick(Cluster<MyItem> cluster) {
+                        map.moveCamera(CameraUpdateFactory.newLatLng(cluster.getPosition()));
+                        //map.animateCamera(CameraUpdateFactory.zoomTo(11));
+                        return true;
+                    }
+                });
+
+                mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+                    @Override
+                    public boolean onClusterItemClick(MyItem item) {
+                        //передаем информацию в диалоговое окно
+                        bundle.putString("name", name_info.get(marker_info.indexOf(item)));
+                        bundle.putString("address", address_info.get(marker_info.indexOf(item)));
+                        bundle.putString("discount", discount_info.get(marker_info.indexOf(item)));
+                        bundle.putString("phone", phone_info.get(marker_info.indexOf(item)));
+                        bundle.putInt("num", marker_info.indexOf(item));
+
+                        dl_info.setArguments(bundle);
+                        dl_info.show(getFragmentManager(), "dl_info");
+
+                        return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
+                        // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
+                    }
+                });
+
+
+
+             /*   map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         //передаем информацию в диалоговое окно
@@ -135,7 +181,7 @@ public class HomeFragment extends Fragment {
                         return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
                     }
-                });
+                });*/
 
             }
 
