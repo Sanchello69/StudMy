@@ -20,8 +20,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -124,17 +122,12 @@ public class HomeFragment extends Fragment {
                     mMap.setMyLocationEnabled(true); //показать свое местоположение
                 }
 
-               // LatLng location = new LatLng(latitude, longitude);
-               // marker = map.addMarker(new MarkerOptions().position(location)); // ставим маркеры
-                //marker_info.add(marker);
-
                 MyItem offsetItem = new MyItem(latitude, longitude);
                 marker_info.add(offsetItem);
                 mClusterManager.addItem(offsetItem);
                 mClusterManager.setAnimation(false);
                 mClusterManager.cluster ();
                 map.setOnMarkerClickListener(mClusterManager);
-
 
                 mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
                     @Override
@@ -162,27 +155,6 @@ public class HomeFragment extends Fragment {
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
                     }
                 });
-
-
-
-             /*   map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        //передаем информацию в диалоговое окно
-                        bundle.putString("name", name_info.get(marker_info.indexOf(marker)));
-                        bundle.putString("address", address_info.get(marker_info.indexOf(marker)));
-                        bundle.putString("discount", discount_info.get(marker_info.indexOf(marker)));
-                        bundle.putString("phone", phone_info.get(marker_info.indexOf(marker)));
-                        bundle.putInt("num", marker_info.indexOf(marker));
-
-                        dl_info.setArguments(bundle);
-                        dl_info.show(getFragmentManager(), "dl_info");
-
-                        return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
-                        // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
-                    }
-                });*/
-
             }
 
             @Override
