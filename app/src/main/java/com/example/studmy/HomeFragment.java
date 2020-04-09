@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
 
     private GoogleMap mMap;
     private LatLngBounds MOSKAU = new LatLngBounds(new LatLng
-            (55.574487, 37.379872), new LatLng(55.901914, 37.818179)); //границы Москвы
+            (55.574487, 37.359872), new LatLng(55.901914, 37.868179)); //границы Москвы
     private SupportMapFragment mapFragment;
     //private Marker marker;
     private ClusterManager<MyItem> mClusterManager;
