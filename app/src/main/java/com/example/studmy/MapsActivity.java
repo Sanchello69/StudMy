@@ -21,7 +21,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.content, new HomeFragment());
+        fragmentTransaction.add(R.id.content, new HomeFragment(getApplicationContext()));
         fragmentTransaction.commit();
 
         //получаем меню и прикрепляем слушателя
@@ -36,7 +36,8 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
 
         switch (item.getItemId()) {
             case R.id.home:
-                fragment = new HomeFragment();
+                //fragment = new HomeFragment();
+                fragment = new HomeFragment(getApplicationContext());
                 break;
 
             case R.id.like:
