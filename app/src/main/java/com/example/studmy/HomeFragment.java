@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,8 +35,8 @@ public class HomeFragment extends Fragment {
     private GoogleMap mMap;
     private LatLngBounds MOSKAU = new LatLngBounds(new LatLng
             (55.574487, 37.359872), new LatLng(55.901914, 37.868179)); //границы Москвы
+    private LatLng MOSKAU1 = new LatLng(55.753215, 37.622504);
     private SupportMapFragment mapFragment;
-    //private Marker marker;
     private ClusterManager<MyItem> mClusterManager;
 
     DialogFragment dl_info;
@@ -75,8 +74,9 @@ public class HomeFragment extends Fragment {
                 public void onMapReady(GoogleMap googleMap) {
                     mMap = googleMap;
 
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(MOSKAU, 5); //положение карты при запуске
-                    mMap.moveCamera(cameraUpdate); //мгновенное перемещение камеры, без анимации
+                    //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(MOSKAU1, 5); //положение карты при запуске
+                    //mMap.moveCamera(cameraUpdate); //мгновенное перемещение камеры, без анимации
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MOSKAU1, 10));
                     mMap.setLatLngBoundsForCameraTarget(MOSKAU); //ограничиваем область видимости карты
 
                     mClusterManager = new ClusterManager<MyItem>(getActivity(), mMap);
