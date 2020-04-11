@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,7 @@ public class LikeFragment extends Fragment {
     FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
     DatabaseReference ref; // ключ
     DatabaseReference ref1; // ключ
+    DatabaseReference ref2; // ключ
 
     ChildEventListener mChildEventListener;
 
@@ -120,10 +122,29 @@ public class LikeFragment extends Fragment {
                 }
 
                 //создаем объект адаптера и передаем ему список данных
-                LikeAdapter likeAdapter = new LikeAdapter(like_class, getActivity());
+                final LikeAdapter likeAdapter = new LikeAdapter(like_class, getActivity());
 
                 //передаем в recyclerView наш объект адаптера с данными
                 recyclerView.setAdapter(likeAdapter);
+
+                ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        ref2 = db.getReference("user/"+userID+"/like"+"/like"+name_like.indexOf(like_class.get(position).getName_like())); //ключ
+                        ref2.removeValue(); //удаляем
+                        likeAdapter.notifyItemRemoved(position); //удаляем элемент из списка
+                        like_class.remove(position);
+                        recyclerView.getAdapter().notifyDataSetChanged(); //обновляем
+                    }
+                };
+                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                itemTouchHelper.attachToRecyclerView(recyclerView); //прикрепляем к RecyclerView
             }
 
             @Override

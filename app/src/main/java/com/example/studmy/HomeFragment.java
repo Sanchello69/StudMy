@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -124,12 +123,6 @@ public class HomeFragment extends Fragment {
                 latitude_info.add(latitude);
                 longitude_info.add(longitude);
 
-               // if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                  //      == PackageManager.PERMISSION_GRANTED) { //если получено разрешение
-                  //  mMap.setMyLocationEnabled(true); //показать свое местоположение
-              //  }
-
-
                 if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) { //если получено разрешение
                     mMap.setMyLocationEnabled(true); //показать свое местоположение
@@ -168,9 +161,6 @@ public class HomeFragment extends Fragment {
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
                     }
                 });
-
-                boolean flag=true;
-
             }
 
             @Override
