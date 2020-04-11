@@ -1,6 +1,8 @@
 package com.example.studmy;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -27,6 +30,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 
@@ -94,6 +98,19 @@ public class LikeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_like, container, false);
 
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+        if (preferences.getBoolean("pref", true)) {
+            // При первом запуске (или если юзер удалял все данные приложения) показываем тост
+            for (int i=0; i<20; i++){
+                Toast toast = Toast.makeText(getActivity(),
+                        "Чтобы открыть место на карте нажмите на него. \n" +
+                                "Чтобы удалить из избранного свайпните влево.", Toast.LENGTH_LONG);
+                toast.show();
+            }
+
+            preferences.edit().putBoolean("pref", false).commit();
+        }
+
         //присваиваем переменной наш RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewLike);
         //LayoutManager отвечает за позиционирование view-компонентов в RecyclerView,
@@ -135,7 +152,7 @@ public class LikeFragment extends Fragment {
 
                     @Override
                     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-                        int position = viewHolder.getAdapterPosition();
+                        int position = viewHolder.getAdapterPosition(); //получаем позицию элемента
                         ref2 = db.getReference("user/"+userID+"/like"+"/like"+name_like.indexOf(like_class.get(position).getName_like())); //ключ
                         ref2.removeValue(); //удаляем
                         likeAdapter.notifyItemRemoved(position); //удаляем элемент из списка
