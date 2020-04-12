@@ -5,6 +5,9 @@
     <string name="route">На карте</string>
     <string name="share">Поделиться</string>
     <string name="like">Понравившиеся места</string>
+    <string name="settings">Информация о скидках для студентов в кинотеатрах Москвы взята с сайта Киноафиши:\nhttps://msk.kinoafisha.info/cinema/discounts/students/</string>
+    <string name="info">Разработчик: Васильев Александр\nАвтор логотипа: Артем Родюков</string>
+    <string name="email">По всем вопросам обращаться по почте: studakmy@gmail.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
