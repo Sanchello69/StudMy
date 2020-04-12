@@ -28,6 +28,7 @@
             android:padding="10dp"
             android:gravity="center"
             android:autoLink="web"
+            android:layout_weight="1"
             />
 
         <TextView
