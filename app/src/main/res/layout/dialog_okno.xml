@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/fon"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -55,20 +56,22 @@
             android:id="@+id/btn_route"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:backgroundTint="@color/colorPrimary"
             android:text="@string/route"
+            android:textSize="12sp"
             app:icon="@drawable/ic_route"></Button>
 
         <Button
             android:id="@+id/btn_share"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:backgroundTint="@color/colorPrimary"
             android:text="@string/share"
+            android:textSize="12sp"
             app:icon="@drawable/ic_share1"></Button>
 
         <ImageButton

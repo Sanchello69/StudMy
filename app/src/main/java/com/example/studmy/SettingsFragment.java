@@ -52,6 +52,7 @@ public class SettingsFragment extends Fragment {
                                 // закрываем окно и заново открываем окно входа/регистрации
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
+                                getActivity().finish();
                             }
                         });
             }
