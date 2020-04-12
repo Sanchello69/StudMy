@@ -101,7 +101,7 @@ public class LikeFragment extends Fragment {
         SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         if (preferences.getBoolean("pref", true)) {
             // При первом запуске (или если юзер удалял все данные приложения) показываем тост
-            for (int i=0; i<20; i++){
+            for (int i=0; i<3; i++){
                 Toast toast = Toast.makeText(getActivity(),
                         "Чтобы открыть место на карте нажмите на него. \n" +
                                 "Чтобы удалить из избранного свайпните влево.", Toast.LENGTH_LONG);

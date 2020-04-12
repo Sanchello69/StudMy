@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     .show();
             Intent intent = new Intent(MainActivity.this, MapsActivity.class);
             startActivity(intent);
+            finish();
         }
 
         //запрос на использование геолокации
@@ -57,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 1
         );
+    }
+
+    @Override
+    protected void onRestart() {
+        //finish();
+        super.onRestart();
     }
 
     @Override
@@ -74,10 +81,9 @@ public class MainActivity extends AppCompatActivity {
                         .show();
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
-            } else {
-                // закрываем приложение
-                finish();
             }
+            // закрываем приложение
+            finish();
         }
     }
 }
