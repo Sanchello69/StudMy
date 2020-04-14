@@ -1,6 +1,7 @@
 package com.example.studmy;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +42,7 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
 public class LikeFragment extends Fragment {
 
     RecyclerView recyclerView;
+    Dialog dialog;
 
     FirebaseUser user;
     String userID;// id пользователя
@@ -100,14 +103,11 @@ public class LikeFragment extends Fragment {
 
         SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         if (preferences.getBoolean("pref", true)) {
-            // При первом запуске (или если юзер удалял все данные приложения) показываем тост
-            for (int i=0; i<3; i++){
-                Toast toast = Toast.makeText(getActivity(),
-                        "Чтобы открыть место на карте нажмите на него. \n" +
-                                "Чтобы удалить из избранного свайпните влево.", Toast.LENGTH_LONG);
-                toast.show();
-            }
-
+            // При первом запуске (или если юзер удалял все данные приложения) показываем окно
+            dialog = new Dialog(getActivity());
+            // Передаем ссылку на разметку
+            dialog.setContentView(R.layout.dialog_view);
+            dialog.show();
             preferences.edit().putBoolean("pref", false).commit();
         }
 
