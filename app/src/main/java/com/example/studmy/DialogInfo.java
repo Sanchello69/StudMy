@@ -97,7 +97,7 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
         phoneText = bundle.getString("phone");
         num_like = bundle.getInt("num");
 
-        Log.d("ddd", ""+phoneText);
+        Log.d("ddd", ""+bundle);
 
         ref = db.getReference("user/"+userID+"/like"+"/like"+num_like); //ключ
 
