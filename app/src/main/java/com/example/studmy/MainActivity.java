@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //создаем намерение входа
         if (getInstance().getCurrentUser() == null) {
             // запускаем окно входа/регистрации
             startActivityForResult(
@@ -41,12 +41,20 @@ public class MainActivity extends AppCompatActivity {
                     1);
         } else {
             // пользователь уже зашел
-            Toast.makeText(this,
-                    "Привет " + getInstance()
-                            .getCurrentUser()
-                            .getDisplayName(),
-                    Toast.LENGTH_LONG)
-                    .show();
+            if(getInstance().getCurrentUser().getDisplayName()==null){
+                Toast.makeText(this,
+                        "Привет",
+                        Toast.LENGTH_LONG)
+                        .show();
+            }
+            else {
+                Toast.makeText(this,
+                        "Привет " + getInstance()
+                                .getCurrentUser()
+                                .getDisplayName(),
+                        Toast.LENGTH_LONG)
+                        .show();
+            }
             Intent intent = new Intent(MainActivity.this, MapsActivity.class);
             startActivity(intent);
             finish();
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
     }
 
+    //Когда поток входа будет завершен, получаем результат в onActivityResult
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -73,16 +82,24 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 // успешно вошел в систему
-                Toast.makeText(this,
-                        "Привет " + getInstance()
-                                .getCurrentUser()
-                                .getDisplayName(),
-                        Toast.LENGTH_LONG)
-                        .show();
+                if(getInstance().getCurrentUser().getDisplayName()==null){
+                    Toast.makeText(this,
+                            "Привет",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+                else {
+                    Toast.makeText(this,
+                            "Привет " + getInstance()
+                                    .getCurrentUser()
+                                    .getDisplayName(),
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
             }
-            // закрываем приложение
+            // закрываем активность
             finish();
         }
     }
