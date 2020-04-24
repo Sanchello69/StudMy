@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studmy.models.Like;
+
 import java.util.ArrayList;
 
 public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder> {

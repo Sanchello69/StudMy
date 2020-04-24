@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.example.studmy.fragments;
 
 import android.Manifest;
 import android.content.Context;
@@ -9,11 +9,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.studmy.DialogInfo;
+import com.example.studmy.R;
+import com.example.studmy.models.MyItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -41,22 +43,22 @@ public class HomeFragment extends Fragment {
     private ClusterManager<MyItem> mClusterManager;
     private Context mContext;
 
-    DialogFragment dl_info;
+    private DialogFragment dl_info;
 
-    ChildEventListener mChildEventListener;
+    public ChildEventListener mChildEventListener;
 
-    Bundle bundle = new Bundle();
+    private Bundle bundle = new Bundle();
 
     //создаем экземпляр БД и сохраняем ссылку на ветку нашей БД
-    DatabaseReference mProfileRef = FirebaseDatabase.getInstance().getReference("studak/kino");
+    private DatabaseReference mProfileRef = FirebaseDatabase.getInstance().getReference("studak/kino");
 
-    ArrayList<String> name_info = new ArrayList<>(); //список для имен
-    ArrayList<String> address_info = new ArrayList<>(); //список для адресов
-    ArrayList<String> discount_info = new ArrayList<>(); //список для описания скидок
-    ArrayList<String> phone_info = new ArrayList<>(); //список для телефона
-    ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
-    ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
-    ArrayList<MyItem> marker_info = new ArrayList<>(); // список для маркеров
+    private ArrayList<String> name_info = new ArrayList<>(); //список для имен
+    private ArrayList<String> address_info = new ArrayList<>(); //список для адресов
+    private ArrayList<String> discount_info = new ArrayList<>(); //список для описания скидок
+    private ArrayList<String> phone_info = new ArrayList<>(); //список для телефона
+    private ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
+    private ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
+    private ArrayList<MyItem> marker_info = new ArrayList<>(); // список для маркеров
 
     //public HomeFragment() {
    // }

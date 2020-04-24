@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.example.studmy.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,9 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.studmy.fragments.HomeFragment;
+import com.example.studmy.R;
+import com.example.studmy.fragments.LikeFragment;
+import com.example.studmy.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {

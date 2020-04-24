@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.example.studmy.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.studmy.R;
 import com.firebase.ui.auth.AuthUI;
 
 import java.util.Arrays;

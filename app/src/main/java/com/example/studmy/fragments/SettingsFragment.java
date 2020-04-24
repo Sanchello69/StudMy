@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.example.studmy.fragments;
 
 
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.studmy.activity.MainActivity;
+import com.example.studmy.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.example.studmy.models;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;

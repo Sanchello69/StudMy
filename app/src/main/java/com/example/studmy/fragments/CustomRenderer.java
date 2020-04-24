@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.example.studmy.fragments;
 
 import android.content.Context;
 

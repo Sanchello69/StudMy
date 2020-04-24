@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.example.studmy.fragments;
 
 
 import android.app.Dialog;
@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.studmy.models.Like;
+import com.example.studmy.LikeAdapter;
+import com.example.studmy.R;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,10 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 
