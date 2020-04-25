@@ -38,23 +38,23 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
  */
 public class LikeFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    Dialog dialog;
+    private RecyclerView recyclerView;
+    private Dialog dialog;
 
-    FirebaseUser user;
-    String userID;// id пользователя
+    private FirebaseUser user;
+    private String userID;// id пользователя
 
-    FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
-    DatabaseReference ref; // ключ
-    DatabaseReference ref1; // ключ
-    DatabaseReference ref2; // ключ
+    private FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
+    private DatabaseReference ref; // ключ
+    private DatabaseReference ref1; // ключ
+    private DatabaseReference ref2; // ключ
 
     ChildEventListener mChildEventListener;
 
-    ArrayList<Integer> like_num = new ArrayList<>(); //список для номеров избранных
-    ArrayList<String> name_like = new ArrayList<>(); //список для имен
-    ArrayList<String> address_like = new ArrayList<>(); //список для адресов
-    ArrayList<Like> like_class = new ArrayList<>(); //список для инфы о понравивщихся местах
+    private ArrayList<Integer> like_num = new ArrayList<>(); //список для номеров избранных
+    private ArrayList<String> name_like = new ArrayList<>(); //список для имен
+    private ArrayList<String> address_like = new ArrayList<>(); //список для адресов
+    private ArrayList<Like> like_class = new ArrayList<>(); //список для инфы о понравивщихся местах
 
     public LikeFragment() {
         // Required empty public constructor
