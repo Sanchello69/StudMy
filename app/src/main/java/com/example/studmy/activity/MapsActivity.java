@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.example.studmy.fragments.HomeFragment;
 import com.example.studmy.R;
@@ -16,6 +17,8 @@ import com.example.studmy.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
+
+    FrameLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,8 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.content, new HomeFragment(getApplicationContext()));
         fragmentTransaction.commit();
+
+        layout = (FrameLayout) findViewById(R.id.info_fr);
 
         //получаем меню и прикрепляем слушателя
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
@@ -52,6 +57,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
                 break;
         }
 
+        layout.removeAllViews(); // удалить все View из FrameLayout
         return loadFragment(fragment);
     }
 

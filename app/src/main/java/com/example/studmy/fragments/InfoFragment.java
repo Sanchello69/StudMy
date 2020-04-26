@@ -1,4 +1,4 @@
-/*package com.example.studmy;
+package com.example.studmy.fragments;
 
 
 import android.content.Intent;
@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -18,12 +16,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.studmy.R;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -32,64 +32,38 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
 /**
  * A simple {@link Fragment} subclass.
  */
-/*
-public class DialogInfo extends DialogFragment implements View.OnClickListener {
+public class InfoFragment extends Fragment implements View.OnClickListener {
 
     private Button btn_route, btn_share;
     private Bundle bundle;
     private String addressText, nameText, discountText, phoneText;
     private int num_like;
     private boolean likeBoolean;
-    ImageButton imageButton;
+    private ImageButton imageButton;
 
-    ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
+    private ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
 
-    FirebaseUser user;
-    String userID;// id пользователя
+    private FirebaseUser user;
+    private String userID;// id пользователя
 
-    FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
-    DatabaseReference ref; // ключ
-    DatabaseReference ref1; // ключ
+    private FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
+    private DatabaseReference ref; // ключ
+    private DatabaseReference ref1; // ключ
 
     ChildEventListener mChildEventListener;
 
-    public DialogInfo() {
+    public InfoFragment() {
         // Required empty public constructor
 
-        user = getInstance().getCurrentUser();
-        userID = user.getUid();// id пользователя
-
-        ref1 = db.getReference("user/" + userID + "/like");
-
-        mChildEventListener = ref1.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                like_info.add(dataSnapshot.getValue().hashCode());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_okno, null);
+        // Inflate the layout for this fragment
+
+        View view =  inflater.inflate(R.layout.dialog_okno, container, false);
 
         bundle = getArguments();
         addressText = bundle.getString("address");
@@ -97,7 +71,10 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
         discountText = bundle.getString("discount");
         phoneText = bundle.getString("phone");
         num_like = bundle.getInt("num");
+        like_info = bundle.getIntegerArrayList("like");
 
+        user = getInstance().getCurrentUser();
+        userID = user.getUid();// id пользователя
         ref = db.getReference("user/"+userID+"/like"+"/like"+num_like); //ключ
 
         TextView nameView = (TextView)view.findViewById(R.id.info_name);
@@ -117,8 +94,6 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
             TextView phoneView = (TextView)view.findViewById(R.id.info_phone);
             phoneView.setText("Нет данных");
         }
-
-
 
         btn_route=view.findViewById(R.id.btn_route);
         btn_share=view.findViewById(R.id.btn_share);
@@ -193,4 +168,3 @@ public class DialogInfo extends DialogFragment implements View.OnClickListener {
         }
     }
 }
-*/

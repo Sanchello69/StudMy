@@ -5,15 +5,20 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
-import com.example.studmy.DialogInfo;
+//import com.example.studmy.DialogInfo;
 import com.example.studmy.R;
 import com.example.studmy.models.MyItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,16 +27,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
+
 
 public class HomeFragment extends Fragment {
 
@@ -60,6 +70,14 @@ public class HomeFragment extends Fragment {
     private ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
     private ArrayList<MyItem> marker_info = new ArrayList<>(); // список для маркеров
 
+    private ArrayList<Integer> like_info = new ArrayList<>(); //список для избранных
+
+    private FirebaseUser user;
+    private String userID;// id пользователя
+
+    private FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
+    private DatabaseReference ref1; // ключ
+
     //public HomeFragment() {
    // }
 
@@ -72,7 +90,36 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        dl_info = new DialogInfo();
+        //dl_info = new DialogInfo();
+
+        user = getInstance().getCurrentUser();
+        userID = user.getUid();// id пользователя
+
+        ref1 = db.getReference("user/" + userID + "/like");
+
+        mChildEventListener = ref1.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                like_info.add(dataSnapshot.getValue().hashCode());
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // не воссоздаем фрагмент каждый раз, когда убеждаемся, что последнее местоположение/состояние карты сохраняются
         if (mapFragment == null) {
@@ -130,6 +177,8 @@ public class HomeFragment extends Fragment {
                     mMap.setMyLocationEnabled(true); //показать свое местоположение
                 }
 
+                Log.d("ddd",""+like_info);
+
                 MyItem offsetItem = new MyItem(latitude, longitude);
                 marker_info.add(offsetItem);
                 mClusterManager.addItem(offsetItem);
@@ -149,15 +198,34 @@ public class HomeFragment extends Fragment {
                 mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
                     @Override
                     public boolean onClusterItemClick(MyItem item) {
+
+                        map.moveCamera(CameraUpdateFactory.newLatLng(item.getPosition()));
+
                         //передаем информацию в диалоговое окно
                         bundle.putString("name", name_info.get(marker_info.indexOf(item)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(item)));
                         bundle.putString("discount", discount_info.get(marker_info.indexOf(item)));
                         bundle.putString("phone", phone_info.get(marker_info.indexOf(item)));
                         bundle.putInt("num", marker_info.indexOf(item));
+                        bundle.putIntegerArrayList("like", like_info);
 
-                        dl_info.setArguments(bundle);
-                        dl_info.show(getFragmentManager(), "dl_info");
+                        //dl_info.setArguments(bundle);
+                        //dl_info.show(getFragmentManager(), "dl_info");
+
+                        //FrameLayout layout = (FrameLayout) getActivity().findViewById(R.id.info_fr);
+                        //layout.removeAllViews(); // удалить все View из LinearLayout
+
+                        Fragment fragment = new InfoFragment();
+                        fragment.setArguments(bundle);
+
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                        //fragmentTransaction.add(R.id.info_fr, fragment);
+                        fragmentTransaction.replace(R.id.info_fr, fragment); //обновляем
+                        fragmentTransaction.commit();
+
+                        //fragmentTransaction.remove(fragment);
 
                         return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.
