@@ -139,6 +139,8 @@ public class HomeFragment extends Fragment {
                     mMap.setOnCameraIdleListener(mClusterManager);
                     mMap.setOnMarkerClickListener(mClusterManager);
 
+                    //mMap.setPadding(0,0,0,100);
+
                     addMarkersToMap(mMap);
                 }
             });
@@ -201,7 +203,7 @@ public class HomeFragment extends Fragment {
 
                         map.moveCamera(CameraUpdateFactory.newLatLng(item.getPosition()));
 
-                        //передаем информацию в диалоговое окно
+                        //передаем информацию в фрагмент
                         bundle.putString("name", name_info.get(marker_info.indexOf(item)));
                         bundle.putString("address", address_info.get(marker_info.indexOf(item)));
                         bundle.putString("discount", discount_info.get(marker_info.indexOf(item)));

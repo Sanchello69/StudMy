@@ -15,6 +15,7 @@ import com.example.studmy.R;
 import com.example.studmy.fragments.LikeFragment;
 import com.example.studmy.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -31,6 +32,14 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         fragmentTransaction.commit();
 
         layout = (FrameLayout) findViewById(R.id.info_fr);
+
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(layout);
+
+        // настройка состояний нижнего экрана
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+       // bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        bottomSheetBehavior.setHideable(false); // не скрывать элемент при свайпе вниз
 
         //получаем меню и прикрепляем слушателя
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);

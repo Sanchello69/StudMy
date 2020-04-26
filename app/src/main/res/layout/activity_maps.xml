@@ -7,11 +7,11 @@
     android:orientation="vertical"
     tools:context=".activity.MapsActivity"
     >
-
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <FrameLayout
             android:id="@+id/content"
@@ -23,9 +23,12 @@
             android:id="@+id/info_fr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"/>
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="47dp"
+            android:layout_margin="3dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
-    </FrameLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
