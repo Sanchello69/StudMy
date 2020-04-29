@@ -19,7 +19,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
 
-    FrameLayout layout;
+    private FrameLayout layout;
+    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +34,9 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
 
         layout = (FrameLayout) findViewById(R.id.info_fr);
 
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(layout);
-
-        // настройка состояний нижнего экрана
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-       // bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-        bottomSheetBehavior.setHideable(false); // не скрывать элемент при свайпе вниз
+        bottomSheetBehavior = BottomSheetBehavior.from(layout);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
+        bottomSheetBehavior.setHideable(false); //не скрывать элемент при свайпе вниз
 
         //получаем меню и прикрепляем слушателя
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);

@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,9 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-//import com.example.studmy.DialogInfo;
 import com.example.studmy.R;
 import com.example.studmy.models.MyItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -52,8 +49,6 @@ public class HomeFragment extends Fragment {
     private SupportMapFragment mapFragment;
     private ClusterManager<MyItem> mClusterManager;
     private Context mContext;
-
-    private DialogFragment dl_info;
 
     public ChildEventListener mChildEventListener;
 
@@ -89,8 +84,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-
-        //dl_info = new DialogInfo();
 
         user = getInstance().getCurrentUser();
         userID = user.getUid();// id пользователя
@@ -179,8 +172,6 @@ public class HomeFragment extends Fragment {
                     mMap.setMyLocationEnabled(true); //показать свое местоположение
                 }
 
-                Log.d("ddd",""+like_info);
-
                 MyItem offsetItem = new MyItem(latitude, longitude);
                 marker_info.add(offsetItem);
                 mClusterManager.addItem(offsetItem);
@@ -211,23 +202,14 @@ public class HomeFragment extends Fragment {
                         bundle.putInt("num", marker_info.indexOf(item));
                         bundle.putIntegerArrayList("like", like_info);
 
-                        //dl_info.setArguments(bundle);
-                        //dl_info.show(getFragmentManager(), "dl_info");
-
-                        //FrameLayout layout = (FrameLayout) getActivity().findViewById(R.id.info_fr);
-                        //layout.removeAllViews(); // удалить все View из LinearLayout
-
                         Fragment fragment = new InfoFragment();
                         fragment.setArguments(bundle);
 
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-                        //fragmentTransaction.add(R.id.info_fr, fragment);
                         fragmentTransaction.replace(R.id.info_fr, fragment); //обновляем
                         fragmentTransaction.commit();
-
-                        //fragmentTransaction.remove(fragment);
 
                         return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.

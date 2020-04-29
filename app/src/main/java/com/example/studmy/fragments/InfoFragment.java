@@ -43,9 +43,6 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
     private DatabaseReference ref; // ключ
-    private DatabaseReference ref1; // ключ
-
-    ChildEventListener mChildEventListener;
 
     public InfoFragment() {
         // Required empty public constructor
@@ -135,8 +132,6 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        //getDialog().getWindow().setGravity(Gravity.BOTTOM);
-
         return view;
     }
 
@@ -153,7 +148,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
                 //отправляем текстовое сообщение
                 final Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                String textToSend="Ёу, бро, а в этом месте неплохая скидочка: " + nameText +
+                String textToSend="А в этом месте неплохая скидочка: " + nameText +
                         ", по адресу: " + addressText + "\n" +
                         "Скачивай приложение StudMy и следи за всеми скидками в кинотеатрах Москвы " +
                         "/ссылка на приложение/";
