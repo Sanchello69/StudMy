@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.studmy.R;
 import com.example.studmy.models.MyItem;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -73,6 +75,9 @@ public class HomeFragment extends Fragment {
     private FirebaseDatabase db = FirebaseDatabase.getInstance(); //создаем экземпляр БД
     private DatabaseReference ref1; // ключ
 
+    private FrameLayout layout;
+    private BottomSheetBehavior bottomSheetBehavior;
+
     //public HomeFragment() {
    // }
 
@@ -87,6 +92,11 @@ public class HomeFragment extends Fragment {
 
         user = getInstance().getCurrentUser();
         userID = user.getUid();// id пользователя
+
+        layout = (FrameLayout) getActivity().findViewById(R.id.info_fr);
+        bottomSheetBehavior = BottomSheetBehavior.from(layout);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
+        bottomSheetBehavior.setHideable(false); //не скрывать элемент при свайпе вниз
 
         ref1 = db.getReference("user/" + userID + "/like");
 
@@ -131,6 +141,21 @@ public class HomeFragment extends Fragment {
                     mClusterManager.setRenderer(new CustomRenderer<MyItem>(getActivity(), mMap, mClusterManager));
                     mMap.setOnCameraIdleListener(mClusterManager);
                     mMap.setOnMarkerClickListener(mClusterManager);
+
+                    //вызывается при движении камеры
+                    googleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
+                        @Override
+                        public void onCameraMoveStarted(int reason) {
+                            if (reason ==REASON_GESTURE) { //REASON_GESTURE- движение камеры в ответ на жесты пользователя
+
+                                Fragment fragment = getFragmentManager().findFragmentById(R.id.info_fr);
+                                if (fragment!=null){
+                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
+                                    fragment.getView().setVisibility(View.GONE); //скрываем
+                                }
+                            }
+                        }
+                    });
 
                     //mMap.setPadding(0,0,0,100);
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.studmy.fragments.HomeFragment;
@@ -15,12 +16,10 @@ import com.example.studmy.R;
 import com.example.studmy.fragments.LikeFragment;
 import com.example.studmy.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
 
     private FrameLayout layout;
-    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,6 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         fragmentTransaction.commit();
 
         layout = (FrameLayout) findViewById(R.id.info_fr);
-
-        bottomSheetBehavior = BottomSheetBehavior.from(layout);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
-        bottomSheetBehavior.setHideable(false); //не скрывать элемент при свайпе вниз
 
         //получаем меню и прикрепляем слушателя
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
