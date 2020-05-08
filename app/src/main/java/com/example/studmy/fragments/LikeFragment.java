@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,7 +40,7 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
 public class LikeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private Dialog dialog;
+    private DialogFragment dialog;
 
     private FirebaseUser user;
     private String userID;// id пользователя
@@ -101,10 +102,9 @@ public class LikeFragment extends Fragment {
         SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         if (preferences.getBoolean("pref", true)) {
             // При первом запуске (или если юзер удалял все данные приложения) показываем окно
-            dialog = new Dialog(getActivity());
-            // Передаем ссылку на разметку
-            dialog.setContentView(R.layout.dialog_view);
-            dialog.show();
+
+            dialog = new DialogInstruction();
+            dialog.show(getFragmentManager(), "dl_ins");
             preferences.edit().putBoolean("pref", false).commit();
         }
 
