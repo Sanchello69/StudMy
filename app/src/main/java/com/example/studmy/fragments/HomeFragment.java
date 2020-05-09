@@ -149,9 +149,13 @@ public class HomeFragment extends Fragment {
                             if (reason ==REASON_GESTURE) { //REASON_GESTURE- движение камеры в ответ на жесты пользователя
 
                                 Fragment fragment = getFragmentManager().findFragmentById(R.id.info_fr);
+
+
                                 if (fragment!=null){
                                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
-                                    fragment.getView().setVisibility(View.GONE); //скрываем
+                                    fragment.getView().animate().translationY(fragment.getView().getHeight()+10).setDuration(350); //анимация скрытия плавно вниз
+                                    //fragment.getView().setVisibility(View.GONE); //скрываем
+
                                 }
                             }
                         }
