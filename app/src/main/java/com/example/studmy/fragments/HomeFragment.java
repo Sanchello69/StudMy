@@ -212,7 +212,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public boolean onClusterClick(Cluster<MyItem> cluster) {
                         map.moveCamera(CameraUpdateFactory.newLatLng(cluster.getPosition()));
-                        //map.animateCamera(CameraUpdateFactory.zoomTo(11));
+                        map.animateCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom + 2));
                         return true;
                     }
                 });
