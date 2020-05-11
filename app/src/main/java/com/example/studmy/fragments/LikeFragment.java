@@ -1,7 +1,6 @@
 package com.example.studmy.fragments;
 
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -58,7 +57,6 @@ public class LikeFragment extends Fragment {
     private ArrayList<Like> like_class = new ArrayList<>(); //список для инфы о понравивщихся местах
 
     public LikeFragment() {
-        // Required empty public constructor
 
         user = getInstance().getCurrentUser();
         userID = user.getUid();// id пользователя
@@ -184,5 +182,4 @@ public class LikeFragment extends Fragment {
 
         return view ;
     }
-
 }

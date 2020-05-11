@@ -78,9 +78,6 @@ public class HomeFragment extends Fragment {
     private FrameLayout layout;
     private BottomSheetBehavior bottomSheetBehavior;
 
-    //public HomeFragment() {
-   // }
-
     public HomeFragment(Context context) {
         mContext = context;
     }
@@ -132,9 +129,7 @@ public class HomeFragment extends Fragment {
                 public void onMapReady(GoogleMap googleMap) {
                     mMap = googleMap;
 
-                    //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(MOSKAU1, 5); //положение карты при запуске
-                    //mMap.moveCamera(cameraUpdate); //мгновенное перемещение камеры, без анимации
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MOSKAU1, 10));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MOSKAU1, 10)); //положение карты при запуске (без анимации)
                     mMap.setLatLngBoundsForCameraTarget(MOSKAU); //ограничиваем область видимости карты
 
                     mClusterManager = new ClusterManager<MyItem>(getActivity(), mMap);

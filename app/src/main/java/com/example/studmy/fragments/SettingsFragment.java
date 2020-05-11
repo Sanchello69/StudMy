@@ -29,7 +29,6 @@ public class SettingsFragment extends Fragment {
     Button bt_out;
 
     public SettingsFragment() {
-        // Required empty public constructor
     }
 
     @Override
