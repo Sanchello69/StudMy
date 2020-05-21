@@ -5,9 +5,9 @@ android {
     signingConfigs {
         release {
             storeFile file('C:\\Users\\79961\\Desktop\\StudMy\\keystores\\android.jks')
-            keyAlias = '*****'
-            keyPassword '*****'
-            storePassword '*****'
+            keyAlias = 'keyMy'
+            keyPassword 'As200191972'
+            storePassword 'As200191972'
         }
     }
     compileSdkVersion 29
