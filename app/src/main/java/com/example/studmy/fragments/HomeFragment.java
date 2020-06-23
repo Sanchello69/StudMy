@@ -57,7 +57,8 @@ public class HomeFragment extends Fragment {
     private Bundle bundle = new Bundle();
 
     //создаем экземпляр БД и сохраняем ссылку на ветку нашей БД
-    private DatabaseReference mProfileRef = FirebaseDatabase.getInstance().getReference("studak/kino");
+    //private DatabaseReference mProfileRef = FirebaseDatabase.getInstance().getReference("studak/kino");
+    private DatabaseReference mProfileRef = FirebaseDatabase.getInstance().getReference("parser/kinoafisha");
 
     private ArrayList<String> name_info = new ArrayList<>(); //список для имен
     private ArrayList<String> address_info = new ArrayList<>(); //список для адресов

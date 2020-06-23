@@ -113,7 +113,8 @@ public class LikeFragment extends Fragment {
         // которые больше не видны пользователю.
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ref1 = db.getReference("studak/kino");
+        //ref1 = db.getReference("studak/kino");
+        ref1 = db.getReference("parser/kinoafisha");
         mChildEventListener = ref1.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
