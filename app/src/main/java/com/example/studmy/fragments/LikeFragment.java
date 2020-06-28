@@ -1,13 +1,10 @@
 package com.example.studmy.fragments;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,7 +36,7 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
 public class LikeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private DialogFragment dialog;
+    //private DialogFragment dialog;
 
     private FirebaseUser user;
     private String userID;// id пользователя
@@ -97,14 +94,14 @@ public class LikeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_like, container, false);
 
-        SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+        /*SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         if (preferences.getBoolean("pref", true)) {
             // При первом запуске (или если юзер удалял все данные приложения) показываем окно
 
             dialog = new DialogInstruction();
             dialog.show(getFragmentManager(), "dl_ins");
             preferences.edit().putBoolean("pref", false).commit();
-        }
+        }*/
 
         //присваиваем переменной наш RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewLike);
@@ -140,7 +137,7 @@ public class LikeFragment extends Fragment {
                 //передаем в recyclerView наш объект адаптера с данными
                 recyclerView.setAdapter(likeAdapter);
 
-                ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                     @Override
                     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                         return false;
