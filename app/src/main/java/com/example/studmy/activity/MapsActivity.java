@@ -16,6 +16,7 @@ import com.example.studmy.fragments.LikeFragment;
 import com.example.studmy.fragments.SettingsFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -24,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
 
     private FrameLayout layout;
+    private InterstitialAd mInterstitialAd;
     private AdView mAdView;
 
     @Override
@@ -31,11 +33,9 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-5463324623023106/9528147951");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -66,6 +66,11 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
 
             case R.id.like:
                 fragment = new LikeFragment();
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    //Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
                 break;
 
             case R.id.settings:

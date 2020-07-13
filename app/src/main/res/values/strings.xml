@@ -8,7 +8,7 @@
     <string name="like_info1">Чтобы открыть место на карте нажмите на него.</string>
     <string name="like_info2">Чтобы удалить из избранного свайпните влево.</string>
     <string name="settings">Информация о скидках для студентов в кинотеатрах Москвы взята с сайта Киноафиши:\nhttps://msk.kinoafisha.info/cinema/discounts/students/</string>
-    <string name="info">Разработчик: Васильев Александр\nАвтор логотипа: Артем Родюков</string>
+    <string name="info">Разработчик: Васильев Александр\nАвтор логотипа: Родюков Артем</string>
     <string name="email">По всем вопросам обращаться по почте: studakmy@gmail.com</string>
 
 </resources>

@@ -200,7 +200,7 @@ public class HomeFragment extends Fragment {
                 MyItem offsetItem = new MyItem(latitude, longitude);
                 marker_info.add(offsetItem);
                 mClusterManager.addItem(offsetItem);
-                mClusterManager.setAnimation(false);
+                //mClusterManager.setAnimation(false); //отключение анимации кластеризации
                 mClusterManager.cluster ();
                 map.setOnMarkerClickListener(mClusterManager);
 

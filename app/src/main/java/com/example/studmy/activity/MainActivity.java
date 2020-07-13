@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import com.example.studmy.R;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
         //создаем намерение входа
         if (getInstance().getCurrentUser() == null) {
             // запускаем окно входа/регистрации

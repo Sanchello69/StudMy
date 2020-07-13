@@ -17,6 +17,7 @@ class CustomRenderer<T extends ClusterItem> extends DefaultClusterRenderer<T>
     @Override
     protected boolean shouldRenderAsCluster(Cluster<T> cluster) {
         //start clustering if at least 2 items overlap
-        return cluster.getSize() > 1;
+        //исправил на 3
+        return cluster.getSize() > 2;
     }
 }
