@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -27,6 +28,15 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
     private FrameLayout layout;
     private InterstitialAd mInterstitialAd;
     private AdView mAdView;
+    private Intent mIntent;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //Intent mIntent = getIntent();
+        finish();
+        startActivity(mIntent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +62,7 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
+        mIntent = getIntent();
     }
 
     @Override
