@@ -26,7 +26,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
 
     private FrameLayout layout;
-    private InterstitialAd mInterstitialAd;
     private AdView mAdView;
     private Intent mIntent;
 
@@ -42,10 +41,6 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-5463324623023106/9528147951");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -77,11 +72,6 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
 
             case R.id.like:
                 fragment = new LikeFragment();
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                } else {
-                    //Log.d("TAG", "The interstitial wasn't loaded yet.");
-                }
                 break;
 
             case R.id.settings:
