@@ -28,14 +28,14 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
     private FrameLayout layout;
     private AdView mAdView;
     private Intent mIntent;
-
+/*
     @Override
     protected void onRestart() {
         super.onRestart();
         //Intent mIntent = getIntent();
         finish();
         startActivity(mIntent);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

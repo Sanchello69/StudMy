@@ -12,6 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studmy.models.Like;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -36,9 +45,27 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
     }
     //Заполнение виджетов View данными из элемента списка с номером position
     @Override
-    public void onBindViewHolder(@NonNull LikeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final LikeViewHolder holder, int position) {
         holder.name_text.setText(like.get(position).getName_like());
         holder.address_text.setText(like.get(position).getAddress_like());
+        final Like item = like.get(position);
+        if (holder.map != null)
+        {
+            holder.map.onCreate(null);
+            holder.map.onResume();
+            holder.map.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    MapsInitializer.initialize(context.getApplicationContext());
+                    holder.map.setClickable(false);
+                    holder.gMap = googleMap;
+                    LatLng coordinates = new LatLng(item.getLatitude_like(), item.getLongitude_like());
+                    googleMap.addMarker(new MarkerOptions().position(coordinates));
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinates, 15f);
+                    googleMap.moveCamera(cameraUpdate);
+                }
+            });
+        }
     }
     //возвращает общее количество элементов списка. Значения списка передаются с помощью конструктора.
     @Override
@@ -46,17 +73,32 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
         return like.size();
     }
 
-    class LikeViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onViewRecycled(@NonNull LikeViewHolder holder) {
+        if (holder.gMap != null)
+        {
+            holder.gMap.clear();
+            holder.gMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+        }
+    }
+
+    class LikeViewHolder extends RecyclerView.ViewHolder{
 
         TextView name_text;
         TextView address_text;
 
-        public LikeViewHolder(View view) {
-            super(view);
-            name_text = view.findViewById(R.id.name_like);
-            address_text = view.findViewById(R.id.address_like);
+        GoogleMap gMap;
+        MapView map;
+        Context context;
+
+
+        public LikeViewHolder(View itemView) {
+            super(itemView);
+            name_text = itemView.findViewById(R.id.name_like);
+            address_text = itemView.findViewById(R.id.address_like);
+            map = (MapView) itemView.findViewById(R.id.map_lite);
             //вешаем слушателя, обрабатываем клик и предлагаем открыть это место на карте
-            view.setOnClickListener(new View.OnClickListener() {
+            /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
@@ -64,7 +106,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
                     Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
                     context.startActivity(mapIntent);
                 }
-            });
+            });*/
         }
     }
 }

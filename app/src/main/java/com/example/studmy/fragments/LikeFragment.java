@@ -52,6 +52,8 @@ public class LikeFragment extends Fragment {
     private ArrayList<String> name_like = new ArrayList<>(); //список для имен
     private ArrayList<String> address_like = new ArrayList<>(); //список для адресов
     private ArrayList<Like> like_class = new ArrayList<>(); //список для инфы о понравивщихся местах
+    private ArrayList<Double> latitude_info = new ArrayList<>();//список для широты
+    private ArrayList<Double> longitude_info = new ArrayList<>(); // список для долготы
 
     public LikeFragment() {
 
@@ -94,15 +96,6 @@ public class LikeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_like, container, false);
 
-        /*SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-        if (preferences.getBoolean("pref", true)) {
-            // При первом запуске (или если юзер удалял все данные приложения) показываем окно
-
-            dialog = new DialogInstruction();
-            dialog.show(getFragmentManager(), "dl_ins");
-            preferences.edit().putBoolean("pref", false).commit();
-        }*/
-
         //присваиваем переменной наш RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewLike);
         //LayoutManager отвечает за позиционирование view-компонентов в RecyclerView,
@@ -119,14 +112,19 @@ public class LikeFragment extends Fragment {
                 HashMap<String, String> dataString = (HashMap<String, String>) dataSnapshot.getValue();
                 String name = dataString.get("name");
                 String address = dataString.get("address");
+                HashMap<String, Double> dataDouble = (HashMap<String, Double>) dataSnapshot.getValue();
+                double latitude = dataDouble.get("latitude");
+                double longitude = dataDouble.get("longitude");
 
+                latitude_info.add(latitude);
+                longitude_info.add(longitude);
                 name_like.add(name);
                 address_like.add(address);
                 like_class.clear();
                 for (int i=0; i<name_like.size(); i++){
                     for (int j=0; j<like_num.size(); j++){
                         if (i==like_num.get(j)){
-                            like_class.add(new Like(name_like.get(i), address_like.get(i)));
+                            like_class.add(new Like(name_like.get(i), address_like.get(i), latitude_info.get(i), longitude_info.get(i)));
                         }
                     }
                 }
