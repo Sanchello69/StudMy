@@ -39,6 +39,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_margin="2dp"
+                android:id="@+id/card_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="6dp"

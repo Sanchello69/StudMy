@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -16,6 +18,7 @@ import com.example.studmy.R;
 import com.example.studmy.fragments.LikeFragment;
 import com.example.studmy.fragments.SettingsFragment;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -26,7 +29,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
 
     private FrameLayout layout;
-    private AdView mAdView;
+    private AdView adView;
+    private FrameLayout adContainerView;
     private Intent mIntent;
 /*
     @Override
@@ -42,9 +46,14 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        mAdView = findViewById(R.id.adView);
+        adContainerView = findViewById(R.id.ad_view_container);
+        adView = new AdView(this);
+        adView.setAdUnitId(getString(R.string.adMob));
+        adContainerView.addView(adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        AdSize adSize = getAdSize();
+        adView.setAdSize(adSize);
+        adView.loadAd(adRequest);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -93,5 +102,19 @@ public class MapsActivity extends AppCompatActivity implements  BottomNavigation
             return true;
         }
         return false;
+    }
+
+    private AdSize getAdSize() {
+        // Определяем ширину экрана, которая будет использоваться для ширины объявления.
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density;
+
+        int adWidth = (int) (widthPixels / density);
+
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
     }
 }

@@ -3,12 +3,14 @@ package com.example.studmy;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studmy.models.Like;
@@ -18,7 +20,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -37,11 +38,11 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
 
     @NonNull
 
-     // Создание новых View и ViewHolder элемента списка, которые впоследствии могут переиспользоваться.
+    // Создание новых View и ViewHolder элемента списка, которые впоследствии могут переиспользоваться.
     @Override
     public LikeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        return new LikeViewHolder(view);
+        return new LikeViewHolder(view, context);
     }
     //Заполнение виджетов View данными из элемента списка с номером position
     @Override
@@ -72,7 +73,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
     public int getItemCount() {
         return like.size();
     }
-
+    //вызывается для освобождения ресурсов
     @Override
     public void onViewRecycled(@NonNull LikeViewHolder holder) {
         if (holder.gMap != null)
@@ -86,25 +87,37 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
 
         TextView name_text;
         TextView address_text;
+        CardView cardView;
 
         GoogleMap gMap;
         MapView map;
-        Context context;
 
-
-        public LikeViewHolder(View itemView) {
+        public LikeViewHolder(View itemView, final Context c) {
             super(itemView);
             name_text = itemView.findViewById(R.id.name_like);
             address_text = itemView.findViewById(R.id.address_like);
+            cardView = itemView.findViewById(R.id.card_map);
             map = (MapView) itemView.findViewById(R.id.map_lite);
+
             //вешаем слушателя, обрабатываем клик и предлагаем открыть это место на карте
-            /*itemView.setOnClickListener(new View.OnClickListener() {
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     String uri = "geo:0,0?q=" + like.get(position).getName_like() + ' ' + like.get(position).getAddress_like();
                     Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
-                    context.startActivity(mapIntent);
+                    c.startActivity(mapIntent);
+                }
+            });
+
+            /*
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    String uri = "geo:0,0?q=" + like.get(position).getName_like() + ' ' + like.get(position).getAddress_like();
+                    Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
+                    c.startActivity(mapIntent);
                 }
             });*/
         }

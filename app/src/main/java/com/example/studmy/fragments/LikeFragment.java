@@ -36,7 +36,6 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
 public class LikeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    //private DialogFragment dialog;
 
     private FirebaseUser user;
     private String userID;// id пользователя
