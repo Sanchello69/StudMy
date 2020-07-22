@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -132,11 +131,6 @@ public class LikeFragment extends Fragment {
 
                 //создаем объект адаптера и передаем ему список данных
                 final LikeAdapter likeAdapter = new LikeAdapter(like_class, getActivity());
-
-                //ставим наш ограничитель
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-                dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.recylerview_divider));
-                //recyclerView.addItemDecoration(dividerItemDecoration);
 
                 //передаем в recyclerView наш объект адаптера с данными
                 recyclerView.setAdapter(likeAdapter);
