@@ -61,7 +61,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
                     holder.map.setClickable(false);
                     holder.gMap = googleMap;
                     LatLng coordinates = new LatLng(item.getLatitude_like(), item.getLongitude_like());
-                    googleMap.addMarker(new MarkerOptions().position(coordinates));
+                    //googleMap.addMarker(new MarkerOptions().position(coordinates));
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinates, 15f);
                     googleMap.moveCamera(cameraUpdate);
                 }
@@ -109,17 +109,6 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
                     c.startActivity(mapIntent);
                 }
             });
-
-            /*
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    String uri = "geo:0,0?q=" + like.get(position).getName_like() + ' ' + like.get(position).getAddress_like();
-                    Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
-                    c.startActivity(mapIntent);
-                }
-            });*/
         }
     }
 }
