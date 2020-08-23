@@ -1,4 +1,4 @@
-package com.example.studmy.models;
+package com.vas.studmy.models;
 
 public class Like {
     private String name_like;

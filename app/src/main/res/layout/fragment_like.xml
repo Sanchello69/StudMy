@@ -9,19 +9,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/divider"
+        android:background="@color/fon_like"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
             android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:text="@string/like"
-            android:paddingLeft="26dp"
-            android:textColor="@color/text1"
-            android:textSize="20sp"/>
+            android:textColor="@color/textDark"
+            android:textSize="20sp" />
 
 
         <androidx.recyclerview.widget.RecyclerView

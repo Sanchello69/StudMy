@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:305941319441:android:ef04fc4c5441460f3706b0",
         "android_client_info": {
-          "package_name": "com.example.studakmy"
+          "package_name": "com.vas.studakmy"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "305941319441-mjhqpu0u5ectfunvn5dfaqsitmbcmuq0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.studakmy",
+            "package_name": "com.vas.studakmy",
             "certificate_hash": "aeb556c45fdab2838b35a1d02a6a8270cea09de6"
           }
         },
@@ -47,7 +47,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:305941319441:android:04ee53fde0d579153706b0",
         "android_client_info": {
-          "package_name": "com.example.studmy"
+          "package_name": "com.vas.studmy"
         }
       },
       "oauth_client": [
@@ -55,7 +55,7 @@
           "client_id": "305941319441-9an17nj2b763jsbuc7ieqhdrdarp5k9e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.studmy",
+            "package_name": "com.vas.studmy",
             "certificate_hash": "aeb556c45fdab2838b35a1d02a6a8270cea09de6"
           }
         },

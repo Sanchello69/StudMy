@@ -1,4 +1,4 @@
-package com.example.studmy.fragments;
+package com.vas.studmy.fragments;
 
 import android.Manifest;
 import android.content.Context;
@@ -11,14 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.example.studmy.R;
-import com.example.studmy.models.MyItem;
+import com.vas.studmy.R;
+import com.vas.studmy.models.MyItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

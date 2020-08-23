@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.vas.studmy;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.studmy", appContext.getPackageName());
+        assertEquals("com.vas.studmy", appContext.getPackageName());
     }
 }

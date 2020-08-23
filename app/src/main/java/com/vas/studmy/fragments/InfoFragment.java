@@ -1,4 +1,4 @@
-package com.example.studmy.fragments;
+package com.vas.studmy.fragments;
 
 
 import android.content.Intent;
@@ -14,9 +14,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.studmy.R;
+import com.vas.studmy.R;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -146,8 +145,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
                 intent.setType("text/plain");
                 String textToSend="А в этом месте неплохая скидочка: " + nameText +
                         ", по адресу: " + addressText + "\n" +
-                        "Скачивай приложение StudMy и следи за всеми скидками в кинотеатрах Москвы " +
-                        "/ссылка на приложение/";
+                        "Скачивай приложение StudMy и следи за всеми скидками в кинотеатрах Москвы.";
                 intent.putExtra(Intent.EXTRA_TEXT, textToSend);
                 startActivity(Intent.createChooser(intent, "Поделиться"));
                 break;

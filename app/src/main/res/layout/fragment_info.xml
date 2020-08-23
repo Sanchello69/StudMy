@@ -7,28 +7,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_oval"
-        android:layout_gravity="center"
-        android:layout_marginTop="1dp"/>
-
     <TextView
         android:id="@+id/info_name"
+        android:textColor="@color/textDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textIsSelectable="true"
         android:gravity="center"
-        android:textSize="25sp"
-        android:layout_marginBottom="5dp"/>
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/info_discount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:textColor="@color/text1"
+        android:textColor="@color/textLight"
         android:textIsSelectable="true"
         android:textSize="15sp" />
 
@@ -36,7 +29,7 @@
         android:id="@+id/info_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text1"
+        android:textColor="@color/textLight"
         android:textIsSelectable="true"
         android:textSize="15sp"
         android:layout_margin="5dp"
@@ -48,7 +41,7 @@
         android:id="@+id/info_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text1"
+        android:textColor="@color/textLight"
         android:autoLink="phone"
         android:textColorLink="@color/colorPrimary"
         android:textSize="15sp"

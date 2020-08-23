@@ -1,4 +1,4 @@
-package com.example.studmy.activity;
+package com.vas.studmy.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,17 +13,13 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.example.studmy.fragments.HomeFragment;
-import com.example.studmy.R;
-import com.example.studmy.fragments.LikeFragment;
-import com.example.studmy.fragments.SettingsFragment;
+import com.vas.studmy.fragments.HomeFragment;
+import com.vas.studmy.R;
+import com.vas.studmy.fragments.LikeFragment;
+import com.vas.studmy.fragments.SettingsFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MapsActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {

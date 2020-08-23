@@ -1,4 +1,4 @@
-package com.example.studmy;
+package com.vas.studmy;
 
 import org.junit.Test;
 

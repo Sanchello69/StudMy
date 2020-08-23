@@ -2,57 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardBackgroundColor="@color/fon"
-        card_view:cardCornerRadius="4dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        card_view:cardBackgroundColor="@color/fon"
+        card_view:cardCornerRadius="4dp">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/name_like"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text1"
-        android:textSize="20sp" />
+            <TextView
+                android:id="@+id/name_like"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textDark"
+                android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/address_like"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text2"
-        android:textSize="15sp" />
+            <TextView
+                android:id="@+id/address_like"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textLight"
+                android:textSize="15sp" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_marginTop="5dp"
-        android:id="@+id/card_map"
-        android:layout_marginBottom="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp"
-        >
-        <com.google.android.gms.maps.MapView
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:id="@+id/map_lite"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            map:uiMapToolbar="false"
-            map:liteMode="true" />
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                card_view:cardCornerRadius="4dp">
+
+                <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/map_lite"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    map:liteMode="true"
+                    map:uiMapToolbar="false" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
