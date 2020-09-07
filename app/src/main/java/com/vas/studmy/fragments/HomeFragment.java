@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
         layout = (FrameLayout) getActivity().findViewById(R.id.info_fr);
         bottomSheetBehavior = BottomSheetBehavior.from(layout);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
-        bottomSheetBehavior.setHideable(false); //не скрывать элемент при свайпе вниз
+        //bottomSheetBehavior.setHideable(false); //не скрывать элемент при свайпе вниз
 
         ref1 = db.getReference("user/" + userID + "/like");
 
