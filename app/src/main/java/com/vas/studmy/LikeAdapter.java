@@ -86,6 +86,8 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
         TextView name_text;
         TextView address_text;
         CardView cardView;
+        CardView cardView_item;
+        boolean click = true;
 
         GoogleMap gMap;
         MapView map;
@@ -94,8 +96,21 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
             super(itemView);
             name_text = itemView.findViewById(R.id.name_like);
             address_text = itemView.findViewById(R.id.address_like);
+            cardView_item = itemView.findViewById(R.id.card_list_item);
             cardView = itemView.findViewById(R.id.card_map);
+            cardView.setVisibility(View.GONE); //скрываем cardview с мини картой
             map = (MapView) itemView.findViewById(R.id.map_lite);
+
+            cardView_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (click)
+                        cardView.setVisibility(View.VISIBLE);
+                    else
+                        cardView.setVisibility(View.GONE);
+                    click=!click;
+                }
+            });
 
             //вешаем слушателя, обрабатываем клик и предлагаем открыть это место на карте
             cardView.setOnClickListener(new View.OnClickListener() {

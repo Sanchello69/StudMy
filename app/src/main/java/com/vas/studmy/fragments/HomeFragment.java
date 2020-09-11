@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.vas.studmy.R;
 import com.vas.studmy.models.MyItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -215,7 +217,6 @@ public class HomeFragment extends Fragment {
                 mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
                     @Override
                     public boolean onClusterItemClick(MyItem item) {
-
                         map.moveCamera(CameraUpdateFactory.newLatLng(item.getPosition()));
 
                         //передаем информацию в фрагмент

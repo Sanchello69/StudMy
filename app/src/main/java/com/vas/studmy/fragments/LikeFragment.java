@@ -143,7 +143,7 @@ public class LikeFragment extends Fragment {
                     @Override
                     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
                         int position = viewHolder.getAdapterPosition(); //получаем позицию элемента
-                        ref2 = db.getReference("user/"+userID+"/like"+"/like"+name_like.indexOf(like_class.get(position).getName_like())); //ключ
+                        ref2 = db.getReference("user/"+userID+"/like"+"/like"+address_like.indexOf(like_class.get(position).getAddress_like())); //ключ
                         ref2.removeValue(); //удаляем
                         likeAdapter.notifyItemRemoved(position); //удаляем элемент из списка
                         like_class.remove(position);
