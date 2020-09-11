@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SettingsFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,44 +15,61 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_logomain" />
 
         <TextView
             android:id="@+id/info_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:autoLink="web"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/settings"
             android:textColor="@color/textDark"
             android:textSize="14sp"
-            android:text="@string/settings"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:autoLink="web"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
             android:id="@+id/info_web"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:autoLink="email"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/email"
             android:textColor="@color/textDark"
             android:textSize="14sp"
-            android:text="@string/email"
-            android:padding="10dp"
-            android:gravity="left"
-            android:autoLink="email"
-            android:layout_weight="1"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_settings" />
 
         <Button
             android:id="@+id/button_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/colorPrimaryLight"
             android:layout_margin="20dp"
-            android:text="@string/sign_out" />
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:text="@string/sign_out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
