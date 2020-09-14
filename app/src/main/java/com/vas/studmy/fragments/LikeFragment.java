@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -147,7 +148,9 @@ public class LikeFragment extends Fragment {
                         ref2.removeValue(); //удаляем
                         likeAdapter.notifyItemRemoved(position); //удаляем элемент из списка
                         like_class.remove(position);
-                        recyclerView.getAdapter().notifyDataSetChanged(); //обновляем
+                        recyclerView.getAdapter().notifyItemRemoved(position);
+                        recyclerView.getAdapter().notifyItemRangeChanged (position, like_class.size());
+                        //recyclerView.getAdapter().notifyDataSetChanged(); //обновляем
                     }
                 };
                 ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
