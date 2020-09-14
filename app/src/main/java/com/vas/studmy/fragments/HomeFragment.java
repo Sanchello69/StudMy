@@ -149,7 +149,7 @@ public class HomeFragment extends Fragment {
 
 
                                 if (fragment!=null){
-                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
+                                    //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
                                     fragment.getView().animate().translationY(fragment.getView().getHeight()+10).setDuration(350); //анимация скрытия плавно вниз
                                     //fragment.getView().setVisibility(View.GONE); //скрываем
 
@@ -235,6 +235,9 @@ public class HomeFragment extends Fragment {
                         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                         fragmentTransaction.replace(R.id.info_fr, fragment); //обновляем
                         fragmentTransaction.commit();
+
+                        layout.invalidate();
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
 
                         return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
                         // Поведение по умолчанию для события щелчка маркера - показать его информационное окно и переместить камеру так, чтобы маркер находился в центре карты.

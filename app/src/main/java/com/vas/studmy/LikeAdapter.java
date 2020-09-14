@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.vas.studmy.models.Like;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -59,7 +60,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
                     holder.map.setClickable(false);
                     holder.gMap = googleMap;
                     LatLng coordinates = new LatLng(item.getLatitude_like(), item.getLongitude_like());
-                    //googleMap.addMarker(new MarkerOptions().position(coordinates));
+                    googleMap.addMarker(new MarkerOptions().position(coordinates));
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinates, 15f);
                     googleMap.moveCamera(cameraUpdate);
                 }
