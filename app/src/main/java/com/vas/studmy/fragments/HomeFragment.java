@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment {
     private SupportMapFragment mapFragment;
     private ClusterManager<MyItem> mClusterManager;
     private Context mContext;
+    private CoordinatorLayout coordinatorLayout;
 
     public ChildEventListener mChildEventListener;
 
@@ -93,9 +95,9 @@ public class HomeFragment extends Fragment {
         userID = user.getUid();// id пользователя
 
         layout = (FrameLayout) getActivity().findViewById(R.id.info_fr);
+        coordinatorLayout = getActivity().findViewById(R.id.coordinatorlayout);
         bottomSheetBehavior = BottomSheetBehavior.from(layout);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
-        //bottomSheetBehavior.setHideable(false); //не скрывать элемент при свайпе вниз
 
         ref1 = db.getReference("user/" + userID + "/like");
 
@@ -144,22 +146,16 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onCameraMoveStarted(int reason) {
                             if (reason ==REASON_GESTURE) { //REASON_GESTURE- движение камеры в ответ на жесты пользователя
-
                                 Fragment fragment = getFragmentManager().findFragmentById(R.id.info_fr);
-
-
                                 if (fragment!=null){
                                     //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
                                     fragment.getView().animate().translationY(fragment.getView().getHeight()+10).setDuration(350); //анимация скрытия плавно вниз
                                     //fragment.getView().setVisibility(View.GONE); //скрываем
-
                                 }
                             }
                         }
                     });
-
                     //mMap.setPadding(0,0,0,100);
-
                     addMarkersToMap(mMap);
                 }
             });
@@ -236,7 +232,7 @@ public class HomeFragment extends Fragment {
                         fragmentTransaction.replace(R.id.info_fr, fragment); //обновляем
                         fragmentTransaction.commit();
 
-                        layout.invalidate();
+                        coordinatorLayout.requestLayout();
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //расширенный
 
                         return true; //Если вернется false, то в дополнение к пользовательскому поведению произойдет поведение по умолчанию.
