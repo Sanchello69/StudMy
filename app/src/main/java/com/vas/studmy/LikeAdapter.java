@@ -48,24 +48,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
     public void onBindViewHolder(@NonNull final LikeViewHolder holder, int position) {
         holder.name_text.setText(like.get(position).getName_like());
         holder.address_text.setText(like.get(position).getAddress_like());
-        final Like item = like.get(position);
-        if (holder.map != null)
-        {
-            holder.map.onCreate(null);
-            holder.map.onResume();
-            holder.map.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-                    MapsInitializer.initialize(context.getApplicationContext());
-                    holder.map.setClickable(false);
-                    holder.gMap = googleMap;
-                    LatLng coordinates = new LatLng(item.getLatitude_like(), item.getLongitude_like());
-                    googleMap.addMarker(new MarkerOptions().position(coordinates));
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinates, 15f);
-                    googleMap.moveCamera(cameraUpdate);
-                }
-            });
-        }
+        holder.cardView.setVisibility(View.GONE);
     }
     //возвращает общее количество элементов списка. Значения списка передаются с помощью конструктора.
     @Override
@@ -79,6 +62,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
         {
             holder.gMap.clear();
             holder.gMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+            holder.click = !holder.click;
         }
     }
 
@@ -99,14 +83,33 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
             address_text = itemView.findViewById(R.id.address_like);
             cardView_item = itemView.findViewById(R.id.card_list_item);
             cardView = itemView.findViewById(R.id.card_map);
-            cardView.setVisibility(View.GONE); //скрываем cardview с мини картой
+            //cardView.setVisibility(View.GONE); //скрываем cardview с мини картой
             map = (MapView) itemView.findViewById(R.id.map_lite);
 
             cardView_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (click)
-                        cardView.setVisibility(View.VISIBLE);
+                    if (click){
+                        final int position = getAdapterPosition();
+                        if (map != null) {
+                            map.onCreate(null);
+                            map.onResume();
+                            map.getMapAsync(new OnMapReadyCallback() {
+                                @Override
+                                public void onMapReady(GoogleMap googleMap) {
+                                    MapsInitializer.initialize(c.getApplicationContext());
+                                    map.setClickable(false);
+                                    gMap = googleMap;
+                                    LatLng coordinates = new LatLng(like.get(position).
+                                            getLatitude_like(), like.get(position).getLongitude_like());
+                                    googleMap.addMarker(new MarkerOptions().position(coordinates));
+                                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinates, 15f);
+                                    googleMap.moveCamera(cameraUpdate);
+                                }
+                            });
+                            cardView.setVisibility(View.VISIBLE);
+                        }
+                    }
                     else
                         cardView.setVisibility(View.GONE);
                     click=!click;
